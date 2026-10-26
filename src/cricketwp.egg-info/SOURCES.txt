@@ -1,0 +1,9 @@
+pyproject.toml
+src/cricketwp/__init__.py
+src/cricketwp.egg-info/PKG-INFO
+src/cricketwp.egg-info/SOURCES.txt
+src/cricketwp.egg-info/dependency_links.txt
+src/cricketwp.egg-info/top_level.txt
+src/cricketwp/api/__init__.py
+src/cricketwp/data/__init__.py
+tests/test_smoke.py
