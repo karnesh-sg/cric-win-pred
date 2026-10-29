@@ -1,0 +1,2 @@
+- API: https://cric-win-pred.onrender.com/docs
+- Dashboard: https://cric-win-pred-7k7cqliuzk44nadbhmzp63.streamlit.app/
