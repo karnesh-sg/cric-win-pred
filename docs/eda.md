@@ -21,8 +21,22 @@ MA Chidambaram Stadium
 
 Scoring rate is the highest in the last 5 overs
 
+## 6. Chase win-rate heatmap
+
+Chase win probability is strongly influenced by the runs required and balls remaining. Teams generally have a higher chance of winning when they need fewer runs and have more deliveries available.
+
+## 7. First-innings projection
+
+There is a strong positive relationship between the score after 10 overs and the final first-innings total.
+
+
 ## Modelling implications
 - Cricket scoring patterns may change across years.
 - Venue conditions may influence match outcomes.
 - Scoring rates vary across innings phases.
 - The model should consider the current match situation.
+- Include runs required and balls remaining in the chase model.
+- Investigate venue and year as potential features.
+- Account for different scoring rates across innings phases.
+- Evaluate uncertainty in first-innings score predictions.
+- Use match-based train/test splitting to prevent data leakage.
