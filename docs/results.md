@@ -44,3 +44,66 @@ Validation split: 2024 (chronological)
 - Results are from the chronological validation split.
 - The locked test set (2025 onward) remains untouched.
 - These baselines will serve as reference points for future models.
+
+
+| XGBoost — Monotonic | CHASE_FEATURES | 0.3467304 | 0.1107270 | 0.9240892 | 0.0225579 |
+
+
+### XGBoost — Monotonic Constraints
+
+- Algorithm: XGBoost Classifier
+- Maximum estimators: 2000
+- Learning rate: 0.05
+- Maximum depth: 5
+- Subsample: 0.8
+- Column sample by tree: 0.8
+- Tree method: hist
+- Monotonic constraints: Enabled
+- Evaluation metric: Log Loss
+- Early stopping rounds: 50
+- Best iteration: 121
+
+Validation metrics:
+- Log Loss: 0.3467304
+- Brier Score: 0.1107270
+- AUC: 0.9240892
+- ECE: 0.0225579
+
+XGBoost outperformed both previous baselines on all four validation metrics.
+
+
+
+### XGBoost Learning Curve — Overfitting Analysis
+
+Training Log Loss continued to decrease after the best iteration (121), while validation Log Loss reached its minimum near iteration 121 and then flattened with a slight increase, indicating mild overfitting beyond this point. Early stopping at iteration 121 effectively limits this overfitting, so the current model configuration is retained without further complexity reduction.
+
+
+
+## Match Group Cross-Validation
+
+GroupKFold cross-validation was performed using 5 folds, keeping all ball-by-ball observations from each match within the same fold.
+
+| Fold | Log Loss |
+|---|---:|
+| Fold 1 | 0.419818 |
+| Fold 2 | 0.403592 |
+| Fold 3 | 0.419695 |
+| Fold 4 | 0.421771 |
+| Fold 5 | 0.407632 |
+| **Mean** | **0.414502** |
+| **Standard Deviation** | **0.007407** |
+
+The five folds produced relatively consistent Log Loss values, with a mean of 0.414502 and standard deviation of 0.007407. The grouped cross-validation Log Loss is higher than the chronological validation Log Loss of 0.346730, indicating that model performance varies across evaluation splits.
+
+## Label-Shuffle Leakage Check
+
+The XGBoost model was trained using randomly shuffled training labels and evaluated against the true validation labels.
+
+| Metric | Shuffled-label result |
+|---|---:|
+| Log Loss | 0.692786 |
+| Brier Score | 0.249806 |
+| AUC | 0.472831 |
+| ECE | 0.058829 |
+
+The shuffled-label AUC of 0.472831 is close to the expected random-ranking value of 0.5. This provides no obvious evidence of leakage from the features into the target, although it does not rule out every possible leakage issue.
