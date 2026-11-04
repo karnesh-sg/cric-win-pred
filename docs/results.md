@@ -107,3 +107,38 @@ The XGBoost model was trained using randomly shuffled training labels and evalua
 | ECE | 0.058829 |
 
 The shuffled-label AUC of 0.472831 is close to the expected random-ranking value of 0.5. This provides no obvious evidence of leakage from the features into the target, although it does not rule out every possible leakage issue.
+
+## Day 10 — Optuna Hyperparameter Tuning & Feature Ablation
+
+### Optuna Hyperparameter Search
+
+- Trials completed: 60
+- Best validation Log Loss: 0.340546
+- Day 9 validation Log Loss: 0.346730
+- Relative Log Loss reduction: approximately 1.78%
+
+Best parameters:
+
+- max_depth: 6
+- learning_rate: 0.126309
+- subsample: 0.756896
+- colsample_bytree: 0.720898
+- min_child_weight: 50
+- reg_lambda: 0.202514
+
+### Feature Ablation
+
+| Configuration | Validation Log Loss |
+|---|---:|
+| Full Model | 0.34055 |
+| Without Momentum | 0.34930 |
+| Without Venue | 0.35713 |
+| Without Elo | 0.34818 |
+
+### Conclusion
+
+The full 16-feature model achieved the lowest validation Log Loss.
+
+Venue features had the largest observed impact, followed by momentum and Elo features. Removing any of these groups worsened validation performance.
+
+All feature groups are retained for subsequent model evaluation.
