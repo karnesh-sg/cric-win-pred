@@ -142,3 +142,7 @@ The full 16-feature model achieved the lowest validation Log Loss.
 Venue features had the largest observed impact, followed by momentum and Elo features. Removing any of these groups worsened validation performance.
 
 All feature groups are retained for subsequent model evaluation.
+
+### SHAP Analysis
+
+The SHAP summary plot shows that `rrr_minus_crr` and `rrr` are the most influential features, with higher values generally pushing predictions away from a batting-team win, reflecting increased chase difficulty. `wickets_in_hand` and `runs_needed` are also highly influential, with more wickets generally favouring the batting team and a larger number of runs remaining generally making the chase harder. Team strength (`elo_diff`) and venue-related features also influence predictions, indicating that the model uses both match-state information and contextual factors to estimate chase outcomes.
