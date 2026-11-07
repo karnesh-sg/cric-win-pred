@@ -199,3 +199,69 @@ Result: **4 passed**
 
 ## Status
 Day 11 completed.
+
+
+# Day 13 — GATE C Final Evaluation
+
+**Date:** 2026-11-07  
+**Project:** `cric-win-pred`  
+**Focus:** Final model evaluation on held-out test data
+
+## Today's Objectives
+
+- Evaluate the final calibrated model on the held-out chase test set.
+- Apply probability calibration using the validation-fitted isotonic calibration mapping.
+- Apply deterministic chase outcome rules.
+- Evaluate overall model performance.
+- Evaluate performance across different chase phases.
+- Record final metrics without tuning against the test set.
+
+## Work Completed
+
+- Generated raw chase-win probabilities using the trained classifier.
+- Applied isotonic calibration using the saved calibration mapping.
+- Applied deterministic prediction rules:
+  - If runs needed are zero or less, chase-win probability is 1.0.
+  - If balls remaining are zero while runs are still required, probability is 0.0.
+  - If wickets in hand are zero while runs are still required, probability is 0.0.
+- Evaluated the final probabilities using Log Loss, Brier Score, ROC-AUC, and ECE.
+- Evaluated metrics separately across four chase phases.
+- Recorded final test results in `results.md`.
+
+## Final Overall Test Results
+
+| Metric | Result |
+|---|---:|
+| Log Loss | 0.3217 |
+| Brier Score | 0.1029 |
+| ROC-AUC | 0.9377 |
+| ECE | 0.0319 |
+
+## Chase Phase Results
+
+| Phase | Log Loss | Brier Score | ROC-AUC | ECE |
+|---|---:|---:|---:|---:|
+| (0, 36] | 0.4167 | 0.1362 | 0.8922 | 0.0418 |
+| (36, 60] | 0.3387 | 0.1059 | 0.9337 | 0.0364 |
+| (60, 90] | 0.2663 | 0.0842 | 0.9575 | 0.0298 |
+| (90, 120] | 0.1845 | 0.0575 | 0.9792 | 0.0278 |
+
+## Learning Reflection
+
+The final model achieved strong test-set discrimination with a ROC-AUC of 0.9377.
+
+The chase-phase evaluation showed that the model performed better in later phases than in the earliest phase. The early phase had higher logloss and Brier score, indicating that probability predictions were more challenging when more balls remained.
+
+The overall ECE was 0.0319, so the model is not perfectly calibrated. Calibration quality should be interpreted alongside logloss, Brier score, and AUC.
+
+The held-out test set was used for final evaluation rather than model selection. I will avoid tuning the model based on these test results.
+
+## Day 13 Status
+
+- [x] Final model test evaluation
+- [x] Overall metrics recorded
+- [x] Chase-phase metrics recorded
+- [x] Results documented
+- [x] Test set kept separate from model tuning
+
+**Day 13 completed.**

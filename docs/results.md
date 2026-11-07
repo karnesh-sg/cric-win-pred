@@ -146,3 +146,28 @@ All feature groups are retained for subsequent model evaluation.
 ### SHAP Analysis
 
 The SHAP summary plot shows that `rrr_minus_crr` and `rrr` are the most influential features, with higher values generally pushing predictions away from a batting-team win, reflecting increased chase difficulty. `wickets_in_hand` and `runs_needed` are also highly influential, with more wickets generally favouring the batting team and a larger number of runs remaining generally making the chase harder. Team strength (`elo_diff`) and venue-related features also influence predictions, indicating that the model uses both match-state information and contextual factors to estimate chase outcomes.
+
+
+# Final Model Evaluation — 2026-11-07
+
+## Overall Test Metrics
+
+| Metric | Result |
+|---|---:|
+| Log Loss | 0.3217 |
+| Brier Score | 0.1029 |
+| ROC-AUC | 0.9377 |
+| ECE | 0.0319 |
+
+## Chase Phase Metrics
+
+| Balls Bowled | Log Loss | Brier | AUC | ECE |
+|---|---:|---:|---:|---:|
+| (0, 36] | 0.4167 | 0.1362 | 0.8922 | 0.0418 |
+| (36, 60] | 0.3387 | 0.1059 | 0.9337 | 0.0364 |
+| (60, 90] | 0.2663 | 0.0842 | 0.9575 | 0.0298 |
+| (90, 120] | 0.1845 | 0.0575 | 0.9792 | 0.0278 |
+
+## Summary
+
+The final calibrated model achieved a test ROC-AUC of **0.9377**. Predictive performance improved across later chase phases. The test set was reserved for final evaluation and not used for tuning.
