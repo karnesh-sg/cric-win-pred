@@ -265,3 +265,85 @@ The held-out test set was used for final evaluation rather than model selection.
 - [x] Test set kept separate from model tuning
 
 **Day 13 completed.**
+
+
+## Day 14 — First-Innings Score Projection (Quantile Models)
+
+**Date:** November 9, 2026
+
+### Objective
+Train three quantile regression models to predict a first-innings final-score range using the 10th, 50th, and 90th percentiles.
+
+### Implementation
+- Reused the existing first-innings train/validation split:
+  - Training rows: 331,864
+  - Validation rows: 75,896
+- Used `FIRST_FEATURES` (12 features) and `final_total` as the target.
+- Trained three XGBoost quantile models with quantiles 0.1, 0.5, and 0.9.
+- Evaluated validation coverage and median prediction MAE.
+- Evaluated MAE, coverage, and average prediction-band width by innings stage.
+- Generated a predicted-median vs actual-final-total scatter plot for states at exactly 60 balls.
+- Hand-tested five representative innings states.
+- Saved the three trained models under `artifacts/`.
+
+### Validation Results
+- 10th–90th percentile coverage: **71.96%**
+- Median prediction MAE: **19.50 runs**
+
+### Stage-wise Results
+| Balls Bowled | MAE (runs) | Coverage | Avg Band Width (runs) |
+|---|---:|---:|---:|
+| 0–36 | 30.02 | 0.683 | 76.21 |
+| 36–60 | 22.14 | 0.688 | 58.46 |
+| 60–90 | 15.60 | 0.725 | 42.16 |
+| 90–120 | 7.54 | 0.790 | 22.63 |
+
+### Sanity Checks
+Five hand-tested states produced plausible median predictions and ordered score ranges:
+- 0 balls at a high-scoring venue: median 165.0
+- 60/1 after 10 overs: median 151.0
+- 40/5 after 10 overs: median 97.7
+- 150/3 after 17 overs: median 182.3
+- 100/9 after 18 overs: median 107.5
+
+The prediction band narrowed as the innings progressed, and median MAE decreased across stages.
+
+### Artifacts
+- `artifacts/score_q10.json`
+- `artifacts/score_q50.json`
+- `artifacts/score_q90.json`
+- `docs/figs/first_innings_median_vs_actual_60_balls.png`
+
+### Reflection
+The median model became more accurate as more innings information became available. The prediction band narrowed through the innings, but overall coverage (71.96%) remained below the approximate 80% target, especially during early stages. This is a limitation to document and revisit during later model refinement.
+
+
+## Day 15 — First-Innings Win Probability Model
+
+### Work Completed
+- Trained an XGBoost classifier for batting-first win probability.
+- Applied monotonic constraints to runs and wickets in hand.
+- Used early stopping to select the best iteration.
+- Calibrated predicted probabilities using isotonic regression.
+- Evaluated performance across innings phases on the test set.
+- Compared the batting-first model with the chase model.
+- Saved the model and calibration artifacts.
+
+### Key Results
+- Best iteration: 119
+- Best validation logloss: 0.5683
+- Calibrated validation logloss: 0.5601
+- Test average cross-model consistency gap: 8.77 percentage points
+- Matched test matches for consistency analysis: 1,133
+
+### Learning Reflection
+Isotonic regression improves the reliability of predicted probabilities by calibrating their relationship with observed outcomes.
+
+Pairing predictions by match ID is essential when comparing two models. Directly comparing arrays without ensuring matching row order can produce misleading consistency results.
+
+The consistency gap measures disagreement between models, not how often either model is correct.
+
+### Next Steps
+- Review model artifacts and documentation.
+- Check that model loading works correctly.
+- Continue with the next planned project session.

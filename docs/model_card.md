@@ -73,3 +73,52 @@ The model bundle contains:
 **Model version:** 1.0.0  
 **Status:** Evaluated and packaged; intended for further integration and monitoring.
 
+##First-innings score projection: 
+Three XGBoost quantile models (10th, 50th, and 90th percentiles) predict a final-score range from first-innings states. Validation median MAE: 19.50 runs; 10th–90th percentile coverage: 71.96%. Models are saved as `artifacts/score_q10.json`, `artifacts/score_q50.json`, and `artifacts/score_q90.json`.
+
+## Batting-First Win Probability Model Card
+
+### Model Overview
+This model estimates the probability that the team batting first wins a T20 match based on the current innings state and contextual features.
+
+### Model Type
+- XGBoost Classifier
+- Isotonic Regression calibration
+
+### Features
+- Runs
+- Wickets in hand
+- Balls left
+- Current run rate
+- Runs in the last 12 balls
+- Wickets in the last 12 balls
+- Dot-ball percentage in the last 12 balls
+- Partnership runs
+- Venue average first-innings score
+- Venue chase rate
+- Elo difference
+- Innings phase
+
+### Intended Use
+- Live batting-first win probability estimation
+- Cricket analytics and match-state visualization
+- Identifying influential match-state factors
+
+### Evaluation
+Validation metrics:
+- Logloss: 0.5601
+- Brier score: 0.1906
+- AUC: 0.7781
+
+Test performance was also evaluated across innings phases. Model discrimination improved as the innings progressed.
+
+### Limitations
+- Calibration was fitted on the validation set; its near-zero ECE may be optimistic.
+- Predictions from innings-state rows are correlated within matches.
+- Cross-model consistency is not equivalent to prediction accuracy.
+- Venue and Elo features may be affected by data availability and historical coverage.
+- Performance may vary by venue, match format, and innings phase.
+
+### Artifacts
+- `artifacts/first_xgb.json`
+- `artifacts/first_iso.json`
