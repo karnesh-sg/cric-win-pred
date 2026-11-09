@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "date": "2026-11-09",
+  "chase_features": [
+    "runs_needed",
+    "balls_left",
+    "wickets_in_hand",
+    "crr",
+    "rrr",
+    "rrr_minus_crr",
+    "target",
+    "runs_last12",
+    "wkts_last12",
+    "dot_pct_last12",
+    "partnership_runs",
+    "venue_avg_first",
+    "venue_chase_rate",
+    "elo_diff",
+    "target_vs_venue",
+    "phase"
+  ],
+  "test_metrics": {
+    "logloss": 0.32171693495108317,
+    "brier": 0.10287300925503678,
+    "auc": 0.9376797880767507,
+    "ece": 0.03188359776016573
+  }
+}

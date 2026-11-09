@@ -1,0 +1,1149 @@
+{
+  "venues": {
+    "7he Sevens Stadium": {
+      "avg_first": 154.5994308075418,
+      "chase_rate": 0.5763963002490218
+    },
+    "AMI Stadium": {
+      "avg_first": 159.97077806576206,
+      "chase_rate": 0.515881485998882
+    },
+    "Achimota Senior Secondary School A Field": {
+      "avg_first": 135.72607612949128,
+      "chase_rate": 0.5584826527364303
+    },
+    "Achimota Senior Secondary School B Field": {
+      "avg_first": 147.9879674388432,
+      "chase_rate": 0.44771590599953964
+    },
+    "Adelaide Oval": {
+      "avg_first": 167.4872154037709,
+      "chase_rate": 0.4756981501245109
+    },
+    "Al Amerat Cricket Ground Oman Cricket (Ministry Turf 1)": {
+      "avg_first": 149.6353579332773,
+      "chase_rate": 0.5806298265663024
+    },
+    "Al Amerat Cricket Ground Oman Cricket (Ministry Turf 2)": {
+      "avg_first": 150.14104254295103,
+      "chase_rate": 0.45915207064682867
+    },
+    "Amini Park": {
+      "avg_first": 131.6569260219207,
+      "chase_rate": 0.505293828666294
+    },
+    "Arnos Vale Ground": {
+      "avg_first": 146.67657280464113,
+      "chase_rate": 0.2777823386147826
+    },
+    "Arun Jaitley Stadium": {
+      "avg_first": 180.77809902655156,
+      "chase_rate": 0.5565667345816758
+    },
+    "Ballpark Ground": {
+      "avg_first": 158.54220663719065,
+      "chase_rate": 0.515881485998882
+    },
+    "Barabati Stadium": {
+      "avg_first": 158.9872154037709,
+      "chase_rate": 0.4756981501245109
+    },
+    "Barsapara Cricket Stadium": {
+      "avg_first": 167.9879674388432,
+      "chase_rate": 0.565362964823069
+    },
+    "Bay Oval": {
+      "avg_first": 177.25239191896497,
+      "chase_rate": 0.29532475799958813
+    },
+    "Bayer Uerdingen Cricket Ground": {
+      "avg_first": 152.06988616150835,
+      "chase_rate": 0.4652792600498043
+    },
+    "Bayuemas Oval": {
+      "avg_first": 127.44331863205224,
+      "chase_rate": 0.5013394024336407
+    },
+    "Beausejour Stadium": {
+      "avg_first": 156.7372154037709,
+      "chase_rate": 0.5381981501245109
+    },
+    "Belgrano Athletic Club Ground": {
+      "avg_first": 152.58636309735564,
+      "chase_rate": 0.4407446934661449
+    },
+    "Bellerive Oval": {
+      "avg_first": 160.5681813926492,
+      "chase_rate": 0.5058510737890618
+    },
+    "Bermuda National Stadium": {
+      "avg_first": 152.63257441005575,
+      "chase_rate": 0.6018617336653623
+    },
+    "Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium": {
+      "avg_first": 171.965584184581,
+      "chase_rate": 0.588890582914062
+    },
+    "Bir Sreshtho Flight Lieutenant Matiur Rahman Stadium": {
+      "avg_first": 155.05302976402228,
+      "chase_rate": 0.5740780267994783
+    },
+    "Boland Park": {
+      "avg_first": 156.25649235147634,
+      "chase_rate": 0.6587386288560249
+    },
+    "Botkyrka Cricket Center": {
+      "avg_first": 144.83977232301672,
+      "chase_rate": 0.5805585200996087
+    },
+    "Botswana Cricket Association Oval 1": {
+      "avg_first": 132.70454506953973,
+      "chase_rate": 0.4576747810472464
+    },
+    "Botswana Cricket Association Oval 2": {
+      "avg_first": 126.4530297640223,
+      "chase_rate": 0.5740780267994783
+    },
+    "Brabourne Stadium": {
+      "avg_first": 174.5695589836465,
+      "chase_rate": 0.5033688000603689
+    },
+    "Bready": {
+      "avg_first": 157.63257441005575,
+      "chase_rate": 0.6018617336653623
+    },
+    "Bready Cricket Club": {
+      "avg_first": 167.4359496782122,
+      "chase_rate": 0.3282882183629249
+    },
+    "Brian Lara Stadium": {
+      "avg_first": 152.34253189002388,
+      "chase_rate": 0.4722264572851553
+    },
+    "Brisbane Cricket Ground": {
+      "avg_first": 159.12824617573818,
+      "chase_rate": 0.3293693144280124
+    },
+    "Buffalo Park": {
+      "avg_first": 155.37954464603345,
+      "chase_rate": 0.36111704019921737
+    },
+    "Bulawayo Athletic Club": {
+      "avg_first": 148.77110331859532,
+      "chase_rate": 0.6865121715708696
+    },
+    "Carrara Oval": {
+      "avg_first": 149.3494308075418,
+      "chase_rate": 0.4513963002490217
+    },
+    "Castle Avenue": {
+      "avg_first": 159.67954464603343,
+      "chase_rate": 0.6611170401992175
+    },
+    "Cazaly's Stadium": {
+      "avg_first": 157.7992410767224,
+      "chase_rate": 0.6018617336653623
+    },
+    "Central Broward Regional Park Stadium Turf Ground": {
+      "avg_first": 160.85433847546975,
+      "chase_rate": 0.39141683645418973
+    },
+    "Civil Service Cricket Club": {
+      "avg_first": 143.83133928738602,
+      "chase_rate": 0.5058510737890618
+    },
+    "Clayton Panama": {
+      "avg_first": 133.6177678600304,
+      "chase_rate": 0.5101064001811068
+    },
+    "College Field": {
+      "avg_first": 141.4359496782122,
+      "chase_rate": 0.5101064001811068
+    },
+    "Coolidge Cricket Ground": {
+      "avg_first": 156.71969643068897,
+      "chase_rate": 0.4407446934661449
+    },
+    "County Ground": {
+      "avg_first": 171.98538903288105,
+      "chase_rate": 0.5436550287137267
+    },
+    "Daren Sammy National Cricket Stadium": {
+      "avg_first": 172.75267332119614,
+      "chase_rate": 0.44771590599953964
+    },
+    "Darren Sammy National Cricket Stadium": {
+      "avg_first": 155.7992410767224,
+      "chase_rate": 0.6018617336653623
+    },
+    "De Beers Diamond Oval": {
+      "avg_first": 160.31060516225938,
+      "chase_rate": 0.5123522668880194
+    },
+    "Desert Springs Cricket Ground": {
+      "avg_first": 128.3469248958922,
+      "chase_rate": 0.5473873647644757
+    },
+    "Dr DY Patil Sports Academy": {
+      "avg_first": 159.0903677728651,
+      "chase_rate": 0.5383612000474327
+    },
+    "Dr. Y.S. Rajasekhara Reddy ACA-VDCA Cricket Stadium": {
+      "avg_first": 166.79181785841337,
+      "chase_rate": 0.5444468160796869
+    },
+    "Dreux Sport Cricket Club": {
+      "avg_first": 149.77954464603346,
+      "chase_rate": 0.4611170401992174
+    },
+    "Dubai International Cricket Stadium": {
+      "avg_first": 151.26805281177542,
+      "chase_rate": 0.48660404540419977
+    },
+    "Eden Gardens": {
+      "avg_first": 169.3451245682285,
+      "chase_rate": 0.5452513742096142
+    },
+    "Eden Park": {
+      "avg_first": 172.5598482153445,
+      "chase_rate": 0.4537056800664058
+    },
+    "Edgbaston": {
+      "avg_first": 167.52272665079497,
+      "chase_rate": 0.20085926169170568
+    },
+    "Entebbe Cricket Oval": {
+      "avg_first": 136.53615665728793,
+      "chase_rate": 0.39141683645418973
+    },
+    "Estonian National Cricket and Rugby Field": {
+      "avg_first": 155.47954464603345,
+      "chase_rate": 0.4611170401992174
+    },
+    "Europa Sports Complex": {
+      "avg_first": 143.94524756637884,
+      "chase_rate": 0.5732350182723716
+    },
+    "Faleata Oval No 2": {
+      "avg_first": 149.9879674388432,
+      "chase_rate": 0.5065394354113044
+    },
+    "Feroz Shah Kotla": {
+      "avg_first": 163.07377609938976,
+      "chase_rate": 0.5324795446460335
+    },
+    "GB Oval": {
+      "avg_first": 168.98977232301672,
+      "chase_rate": 0.4805585200996087
+    },
+    "GMHBA Stadium": {
+      "avg_first": 148.34504058730315,
+      "chase_rate": 0.4191973092720158
+    },
+    "Gaddafi Stadium": {
+      "avg_first": 169.49431795723152,
+      "chase_rate": 0.40586584449978264
+    },
+    "Gahanga B Ground": {
+      "avg_first": 163.9872154037709,
+      "chase_rate": 0.4756981501245109
+    },
+    "Gahanga International Cricket Stadium": {
+      "avg_first": 146.14993675639354,
+      "chase_rate": 0.4390440333610024
+    },
+    "Gahanga International Cricket Stadium. Rwanda": {
+      "avg_first": 124.66946622739857,
+      "chase_rate": 0.6871993565650473
+    },
+    "Gelephu International Cricket Ground": {
+      "avg_first": 144.44524756637884,
+      "chase_rate": 0.39141683645418973
+    },
+    "Goldenacre": {
+      "avg_first": 147.06628720502786,
+      "chase_rate": 0.46759753349934785
+    },
+    "Grainville": {
+      "avg_first": 150.7992410767224,
+      "chase_rate": 0.43519506699869565
+    },
+    "Grand Prairie Stadium": {
+      "avg_first": 151.87954464603345,
+      "chase_rate": 0.6611170401992175
+    },
+    "Grange Cricket Club": {
+      "avg_first": 163.54220663719065,
+      "chase_rate": 0.3730243431417391
+    },
+    "Grange Cricket Club Ground": {
+      "avg_first": 164.77020172075314,
+      "chase_rate": 0.43004334822193235
+    },
+    "Green Park": {
+      "avg_first": 156.67954464603343,
+      "chase_rate": 0.7611170401992174
+    },
+    "Greenfield International Stadium": {
+      "avg_first": 162.37954464603345,
+      "chase_rate": 0.4611170401992174
+    },
+    "Gucherre Cricket Ground": {
+      "avg_first": 167.2244308075418,
+      "chase_rate": 0.4513963002490217
+    },
+    "Guernsey Rovers Athletic Club Ground": {
+      "avg_first": 135.48863591446303,
+      "chase_rate": 0.5895094667773431
+    },
+    "Gymkhana Club Ground": {
+      "avg_first": 123.85570805721709,
+      "chase_rate": 0.5490969860928412
+    },
+    "Hagley Oval": {
+      "avg_first": 164.18073554573022,
+      "chase_rate": 0.6005319239043893
+    },
+    "Happy Valley Ground": {
+      "avg_first": 144.965584184581,
+      "chase_rate": 0.6174620114854906
+    },
+    "Happy Valley Ground 2": {
+      "avg_first": 154.64597871001286,
+      "chase_rate": 0.5235065539227759
+    },
+    "Harare Sports Club": {
+      "avg_first": 160.1379640346526,
+      "chase_rate": 0.4733967662252419
+    },
+    "Hazelaarweg": {
+      "avg_first": 158.31060516225938,
+      "chase_rate": 0.4012411557769082
+    },
+    "Headingley": {
+      "avg_first": 162.46590774338907,
+      "chase_rate": 0.43519506699869565
+    },
+    "Himachal Pradesh Cricket Association Stadium": {
+      "avg_first": 175.44501440194628,
+      "chase_rate": 0.47132807748361855
+    },
+    "Holkar Cricket Stadium": {
+      "avg_first": 170.54419147001857,
+      "chase_rate": 0.6450650223328985
+    },
+    "Hurlingham Club Ground": {
+      "avg_first": 130.48977232301672,
+      "chase_rate": 0.3805585200996087
+    },
+    "ICC Academy": {
+      "avg_first": 145.46212103245188,
+      "chase_rate": 0.43580378671093717
+    },
+    "ICC Academy Ground No 2": {
+      "avg_first": 155.37954464603345,
+      "chase_rate": 0.5611170401992174
+    },
+    "ICC Global Cricket Academy": {
+      "avg_first": 148.54220663719065,
+      "chase_rate": 0.515881485998882
+    },
+    "Independence Park": {
+      "avg_first": 146.12824617573818,
+      "chase_rate": 0.6865121715708696
+    },
+    "Indian Association Ground": {
+      "avg_first": 153.78314360251395,
+      "chase_rate": 0.5671321000830073
+    },
+    "Integrated Polytechnic Regional Centre": {
+      "avg_first": 126.90574842530395,
+      "chase_rate": 0.488563835352711
+    },
+    "Ishoj Cricket Club": {
+      "avg_first": 155.07954464603344,
+      "chase_rate": 0.36111704019921737
+    },
+    "JSCA International Stadium Complex": {
+      "avg_first": 161.9872154037709,
+      "chase_rate": 0.6006981501245109
+    },
+    "Jade Stadium": {
+      "avg_first": 161.2992410767224,
+      "chase_rate": 0.43519506699869565
+    },
+    "Jimmy Powell Oval": {
+      "avg_first": 133.16558418458098,
+      "chase_rate": 0.5603191543426335
+    },
+    "Jinja Cricket Ground": {
+      "avg_first": 137.25649235147634,
+      "chase_rate": 0.515881485998882
+    },
+    "John Davies Oval": {
+      "avg_first": 159.46590774338907,
+      "chase_rate": 0.6018617336653623
+    },
+    "Kennington Oval": {
+      "avg_first": 159.1897723230167,
+      "chase_rate": 0.4305585200996087
+    },
+    "Kensington Oval": {
+      "avg_first": 159.19415561315242,
+      "chase_rate": 0.41746201148549067
+    },
+    "Kerava National Cricket Ground": {
+      "avg_first": 139.9953510559167,
+      "chase_rate": 0.5820720545907312
+    },
+    "Khan Shaheb Osman Ali Stadium": {
+      "avg_first": 157.25649235147634,
+      "chase_rate": 0.515881485998882
+    },
+    "King George V Sports Ground": {
+      "avg_first": 149.2688084986322,
+      "chase_rate": 0.5038334621376612
+    },
+    "Kingsmead": {
+      "avg_first": 158.23771476919822,
+      "chase_rate": 0.44895055140519385
+    },
+    "Kinrara Academy Oval": {
+      "avg_first": 152.48977232301672,
+      "chase_rate": 0.4805585200996087
+    },
+    "Koge Cricket Club": {
+      "avg_first": 148.3409086153138,
+      "chase_rate": 0.6241864942348337
+    },
+    "Korogi Sports Park": {
+      "avg_first": 143.92914390943145,
+      "chase_rate": 0.388892376587775
+    },
+    "Kyambogo Cricket Oval": {
+      "avg_first": 133.4359496782122,
+      "chase_rate": 0.5101064001811068
+    },
+    "La Manga Club Bottom Ground": {
+      "avg_first": 116.77110331859532,
+      "chase_rate": 0.757940742999441
+    },
+    "La Manga Club Top Ground": {
+      "avg_first": 153.81628720502786,
+      "chase_rate": 0.6342642001660145
+    },
+    "Lisicji Jarak Cricket Ground": {
+      "avg_first": 171.17954464603343,
+      "chase_rate": 0.5611170401992174
+    },
+    "Lord's": {
+      "avg_first": 155.48538903288105,
+      "chase_rate": 0.4007978858565839
+    },
+    "Los Pinos Polo Club 1": {
+      "avg_first": 141.07954464603344,
+      "chase_rate": 0.4611170401992174
+    },
+    "Los Pinos Polo Club 2": {
+      "avg_first": 144.96590774338907,
+      "chase_rate": 0.6018617336653623
+    },
+    "Los Reyes Polo Club": {
+      "avg_first": 133.08838294003715,
+      "chase_rate": 0.29013004466579706
+    },
+    "Lugogo Cricket Oval": {
+      "avg_first": 147.5994308075418,
+      "chase_rate": 0.3263963002490217
+    },
+    "M Chinnaswamy Stadium": {
+      "avg_first": 172.5510153878759,
+      "chase_rate": 0.5596933021488529
+    },
+    "M.Chinnaswamy Stadium": {
+      "avg_first": 173.60930697430163,
+      "chase_rate": 0.5529128762853416
+    },
+    "MA Chidambaram Stadium": {
+      "avg_first": 167.1082151051407,
+      "chase_rate": 0.4734969761650658
+    },
+    "Maharaja Yadavindra Singh International Cricket Stadium": {
+      "avg_first": 180.86067158523193,
+      "chase_rate": 0.5048334957387902
+    },
+    "Maharashtra Cricket Association Stadium": {
+      "avg_first": 167.13171469228033,
+      "chase_rate": 0.46843569095436755
+    },
+    "Mahinda Rajapaksa International Cricket Stadium": {
+      "avg_first": 140.81628720502786,
+      "chase_rate": 0.38426420016601454
+    },
+    "Malahide": {
+      "avg_first": 159.96590774338907,
+      "chase_rate": 0.43519506699869565
+    },
+    "Malkerns Country Club oval": {
+      "avg_first": 170.7372154037709,
+      "chase_rate": 0.4131981501245109
+    },
+    "Mangaung Oval": {
+      "avg_first": 161.63257441005575,
+      "chase_rate": 0.43519506699869565
+    },
+    "Manuka Oval": {
+      "avg_first": 153.86616071781495,
+      "chase_rate": 0.5123522668880194
+    },
+    "Maple Leaf North-East Ground": {
+      "avg_first": 173.86616071781495,
+      "chase_rate": 0.29013004466579706
+    },
+    "Maple Leaf North-West Ground": {
+      "avg_first": 136.7737150634928,
+      "chase_rate": 0.5048334957387902
+    },
+    "Marrara Stadium": {
+      "avg_first": 167.25649235147634,
+      "chase_rate": 0.3730243431417391
+    },
+    "Marsa Sports Club": {
+      "avg_first": 162.104545330159,
+      "chase_rate": 0.5786333907998796
+    },
+    "McLean Park": {
+      "avg_first": 162.64393849559272,
+      "chase_rate": 0.6234633779991304
+    },
+    "Meersen": {
+      "avg_first": 139.47954464603345,
+      "chase_rate": 0.5611170401992174
+    },
+    "Melbourne Cricket Ground": {
+      "avg_first": 145.35433847546975,
+      "chase_rate": 0.6641441091814625
+    },
+    "Mission Road Ground": {
+      "avg_first": 160.60542906834263,
+      "chase_rate": 0.4614214000553381
+    },
+    "Mladost Cricket Ground": {
+      "avg_first": 150.48538903288105,
+      "chase_rate": 0.5436550287137267
+    },
+    "Moara Vlasiei Cricket Ground": {
+      "avg_first": 160.48916071477439,
+      "chase_rate": 0.48632569849218726
+    },
+    "Mombasa Sports Club Ground": {
+      "avg_first": 139.9744308075418,
+      "chase_rate": 0.5763963002490218
+    },
+    "Moses Mabhida Stadium": {
+      "avg_first": 157.13257441005575,
+      "chase_rate": 0.43519506699869565
+    },
+    "Mulpani Cricket Ground": {
+      "avg_first": 152.7664136922408,
+      "chase_rate": 0.5895094667773431
+    },
+    "Namibia Cricket Ground": {
+      "avg_first": 164.40814360251395,
+      "chase_rate": 0.5254654334163406
+    },
+    "Narendra Modi Stadium": {
+      "avg_first": 184.41026631828166,
+      "chase_rate": 0.4760546621033133
+    },
+    "Nassau County International Cricket Stadium": {
+      "avg_first": 125.83041895848727,
+      "chase_rate": 0.5854746463070903
+    },
+    "National Cricket Stadium": {
+      "avg_first": 169.90734203541035,
+      "chase_rate": 0.35470541553785956
+    },
+    "National Sports Academy": {
+      "avg_first": 154.09449718212286,
+      "chase_rate": 0.769008968525904
+    },
+    "National Stadium": {
+      "avg_first": 175.32359268858735,
+      "chase_rate": 0.36243668580915117
+    },
+    "Nehru Stadium": {
+      "avg_first": 153.08838294003715,
+      "chase_rate": 0.4012411557769082
+    },
+    "New Wanderers Stadium": {
+      "avg_first": 161.1756195897071,
+      "chase_rate": 0.6548839515755204
+    },
+    "Newlands": {
+      "avg_first": 155.25984821534448,
+      "chase_rate": 0.5870390133997391
+    },
+    "Nigeria Cricket Federation Oval 1": {
+      "avg_first": 133.994471525955,
+      "chase_rate": 0.4219235243781669
+    },
+    "Nigeria Cricket Federation Oval 2": {
+      "avg_first": 114.57620273296085,
+      "chase_rate": 0.6241864942348337
+    },
+    "OUTsurance Oval": {
+      "avg_first": 151.5994308075418,
+      "chase_rate": 0.5763963002490218
+    },
+    "Old Trafford": {
+      "avg_first": 170.75267332119614,
+      "chase_rate": 0.6241864942348337
+    },
+    "P Sara Oval": {
+      "avg_first": 141.13257441005575,
+      "chase_rate": 0.6018617336653623
+    },
+    "Pallekele International Cricket Stadium": {
+      "avg_first": 170.14104254295103,
+      "chase_rate": 0.4297403059409463
+    },
+    "Perth Stadium": {
+      "avg_first": 151.6496205383612,
+      "chase_rate": 0.5509308668326812
+    },
+    "Pierre Werner Cricket Ground": {
+      "avg_first": 159.5268587691213,
+      "chase_rate": 0.3282882183629249
+    },
+    "Prairie View Cricket Complex": {
+      "avg_first": 155.3996205383612,
+      "chase_rate": 0.5509308668326812
+    },
+    "Providence Stadium": {
+      "avg_first": 148.8622154037709,
+      "chase_rate": 0.6006981501245109
+    },
+    "Punjab Cricket Association IS Bindra Stadium": {
+      "avg_first": 172.10844132743813,
+      "chase_rate": 0.5603191543426335
+    },
+    "Punjab Cricket Association Stadium": {
+      "avg_first": 163.31208406000815,
+      "chase_rate": 0.5758822049266383
+    },
+    "Queen's Park Oval": {
+      "avg_first": 141.16322240548496,
+      "chase_rate": 0.5101064001811068
+    },
+    "Queens Sports Club": {
+      "avg_first": 155.18694988581723,
+      "chase_rate": 0.3422958194191024
+    },
+    "R Premadasa Stadium": {
+      "avg_first": 149.4085966621812,
+      "chase_rate": 0.5132863130867864
+    },
+    "R.Premadasa Stadium": {
+      "avg_first": 160.6530297640223,
+      "chase_rate": 0.7074113601328116
+    },
+    "Rajiv Gandhi International Stadium": {
+      "avg_first": 172.07153101537196,
+      "chase_rate": 0.5327491621262335
+    },
+    "Rangiri Dambulla International Stadium": {
+      "avg_first": 152.7534958815642,
+      "chase_rate": 0.5085515693840134
+    },
+    "Rawalpindi Cricket Stadium": {
+      "avg_first": 158.62706574819703,
+      "chase_rate": 0.6641441091814625
+    },
+    "Reforma Athletic Club": {
+      "avg_first": 137.89049513275768,
+      "chase_rate": 0.5101064001811068
+    },
+    "Riverside Ground": {
+      "avg_first": 159.07954464603344,
+      "chase_rate": 0.4611170401992174
+    },
+    "Roma Cricket Ground": {
+      "avg_first": 145.04679096825498,
+      "chase_rate": 0.5065394354113044
+    },
+    "Royal Brussels Cricket Club Ground": {
+      "avg_first": 154.91969643068896,
+      "chase_rate": 0.5740780267994783
+    },
+    "Ruaraka Sports Club Ground": {
+      "avg_first": 172.07954464603344,
+      "chase_rate": 0.4611170401992174
+    },
+    "Sabina Park": {
+      "avg_first": 165.14712876107023,
+      "chase_rate": 0.5584826527364303
+    },
+    "Sano International Cricket Ground": {
+      "avg_first": 131.0194011331789,
+      "chase_rate": 0.4539309854144432
+    },
+    "Sano International Cricket Ground 2": {
+      "avg_first": 139.47954464603345,
+      "chase_rate": 0.6611170401992175
+    },
+    "Santarem Cricket Ground": {
+      "avg_first": 154.72607612949128,
+      "chase_rate": 0.4532194948416934
+    },
+    "Sao Fernando Polo and Cricket Club": {
+      "avg_first": 143.97077806576206,
+      "chase_rate": 0.515881485998882
+    },
+    "Sardar Patel Stadium": {
+      "avg_first": 160.8114968506079,
+      "chase_rate": 0.44771590599953964
+    },
+    "Saurashtra Cricket Association Stadium": {
+      "avg_first": 171.4397723230167,
+      "chase_rate": 0.5305585200996087
+    },
+    "Sawai Mansingh Stadium": {
+      "avg_first": 168.24377323918267,
+      "chase_rate": 0.6522078137259202
+    },
+    "Saxton Oval": {
+      "avg_first": 170.75504960670384,
+      "chase_rate": 0.29013004466579706
+    },
+    "Scott Page Field": {
+      "avg_first": 160.51181785841337,
+      "chase_rate": 0.624446816079687
+    },
+    "Seddon Park": {
+      "avg_first": 172.7664136922408,
+      "chase_rate": 0.4228428001106763
+    },
+    "Selangor Turf Club": {
+      "avg_first": 124.46644983144449,
+      "chase_rate": 0.6005319239043893
+    },
+    "Senwes Park": {
+      "avg_first": 161.54220663719065,
+      "chase_rate": 0.515881485998882
+    },
+    "Shaheed Veer Narayan Singh International Stadium": {
+      "avg_first": 159.51969643068895,
+      "chase_rate": 0.6407446934661449
+    },
+    "Sharjah Cricket Stadium": {
+      "avg_first": 158.63764993321388,
+      "chase_rate": 0.5398334038111731
+    },
+    "Sheikh Abu Naser Stadium": {
+      "avg_first": 163.5328273844816,
+      "chase_rate": 0.4012411557769082
+    },
+    "Sheikh Zayed Stadium": {
+      "avg_first": 145.51877458638168,
+      "chase_rate": 0.5740749333622055
+    },
+    "Shere Bangla National Stadium": {
+      "avg_first": 144.54367885094274,
+      "chase_rate": 0.5251745375311277
+    },
+    "Shrimant Madhavrao Scindia Cricket Stadium": {
+      "avg_first": 150.2992410767224,
+      "chase_rate": 0.6018617336653623
+    },
+    "Sikh Union Club Ground": {
+      "avg_first": 153.9247154037709,
+      "chase_rate": 0.5381981501245109
+    },
+    "Simar Cricket Ground": {
+      "avg_first": 151.10561449766672,
+      "chase_rate": 0.5065394354113044
+    },
+    "Simonds Stadium": {
+      "avg_first": 157.96590774338907,
+      "chase_rate": 0.6018617336653623
+    },
+    "Singapore National Cricket Ground": {
+      "avg_first": 158.1229601656496,
+      "chase_rate": 0.52849154876903
+    },
+    "Sinhalese Sports Club Ground": {
+      "avg_first": 164.87954464603345,
+      "chase_rate": 0.4611170401992174
+    },
+    "Sir Vivian Richards Stadium": {
+      "avg_first": 136.28977232301673,
+      "chase_rate": 0.4805585200996087
+    },
+    "Sky Stadium": {
+      "avg_first": 158.19949405114826,
+      "chase_rate": 0.6234633779991304
+    },
+    "Solvangs Park": {
+      "avg_first": 146.13257441005575,
+      "chase_rate": 0.6018617336653623
+    },
+    "Sophia Gardens": {
+      "avg_first": 156.51969643068895,
+      "chase_rate": 0.6407446934661449
+    },
+    "Sportpark Het Schootsveld": {
+      "avg_first": 149.89049513275768,
+      "chase_rate": 0.6010154910901977
+    },
+    "Sportpark Maarschalkerweerd": {
+      "avg_first": 156.19949405114826,
+      "chase_rate": 0.5123522668880194
+    },
+    "Sportpark Westvliet": {
+      "avg_first": 151.23181785841336,
+      "chase_rate": 0.46444681607968696
+    },
+    "St Albans Club": {
+      "avg_first": 127.28977232301672,
+      "chase_rate": 0.4805585200996087
+    },
+    "St George's College Ground": {
+      "avg_first": 121.12824617573817,
+      "chase_rate": 0.3293693144280124
+    },
+    "St George's Park": {
+      "avg_first": 150.4247154037709,
+      "chase_rate": 0.5381981501245109
+    },
+    "St Georges Quilmes": {
+      "avg_first": 127.84943080754181,
+      "chase_rate": 0.7013963002490218
+    },
+    "Stadium Australia": {
+      "avg_first": 158.08838294003715,
+      "chase_rate": 0.5123522668880194
+    },
+    "Stars Arena Hofstade": {
+      "avg_first": 145.98295387169455,
+      "chase_rate": 0.6342642001660145
+    },
+    "Stubberudmyra Cricket Ground": {
+      "avg_first": 160.8494308075418,
+      "chase_rate": 0.4513963002490217
+    },
+    "Subrata Roy Sahara Stadium": {
+      "avg_first": 151.03615665728793,
+      "chase_rate": 0.4368713819087352
+    },
+    "SuperSport Park": {
+      "avg_first": 170.02410443819196,
+      "chase_rate": 0.5942778909694598
+    },
+    "Svanholm Park": {
+      "avg_first": 146.63555165929765,
+      "chase_rate": 0.5932560857854348
+    },
+    "Sydney Cricket Ground": {
+      "avg_first": 169.25239191896497,
+      "chase_rate": 0.4532194948416934
+    },
+    "Sylhet International Cricket Stadium": {
+      "avg_first": 158.1496205383612,
+      "chase_rate": 0.5509308668326812
+    },
+    "Sylhet Stadium": {
+      "avg_first": 153.37954464603345,
+      "chase_rate": 0.7611170401992174
+    },
+    "TCA Oval": {
+      "avg_first": 140.17760912816053,
+      "chase_rate": 0.6522655704441546
+    },
+    "Tafawa Balewa Square Cricket Oval": {
+      "avg_first": 122.89318154867782,
+      "chase_rate": 0.4203723467330725
+    },
+    "Takashinga Sports Club": {
+      "avg_first": 145.05302976402228,
+      "chase_rate": 0.4407446934661449
+    },
+    "Terdthai Cricket Ground": {
+      "avg_first": 135.03206154393453,
+      "chase_rate": 0.5466280428927174
+    },
+    "The Rose Bowl": {
+      "avg_first": 180.88977232301673,
+      "chase_rate": 0.33055852009960873
+    },
+    "The Village": {
+      "avg_first": 162.9397723230167,
+      "chase_rate": 0.5805585200996087
+    },
+    "The Wanderers Stadium": {
+      "avg_first": 184.13811126617958,
+      "chase_rate": 0.35470541553785956
+    },
+    "Tikkurila Cricket Ground": {
+      "avg_first": 143.46457195471572,
+      "chase_rate": 0.40032854123506395
+    },
+    "Titwood": {
+      "avg_first": 159.67954464603343,
+      "chase_rate": 0.4611170401992174
+    },
+    "Tolerance Oval": {
+      "avg_first": 136.84253189002388,
+      "chase_rate": 0.5436550287137267
+    },
+    "Tony Ireland Stadium": {
+      "avg_first": 148.46590774338907,
+      "chase_rate": 0.43519506699869565
+    },
+    "Trent Bridge": {
+      "avg_first": 164.78977232301673,
+      "chase_rate": 0.4305585200996087
+    },
+    "Tribhuvan University International Cricket Ground": {
+      "avg_first": 168.8052823367658,
+      "chase_rate": 0.44895055140519385
+    },
+    "UKM-YSD Cricket Oval": {
+      "avg_first": 138.65814360251395,
+      "chase_rate": 0.5671321000830073
+    },
+    "Udayana Cricket Ground": {
+      "avg_first": 131.48455700590173,
+      "chase_rate": 0.6360406461793868
+    },
+    "United Cricket Club Ground": {
+      "avg_first": 146.8248102691806,
+      "chase_rate": 0.6087987667496739
+    },
+    "University Oval": {
+      "avg_first": 163.37954464603345,
+      "chase_rate": 0.5611170401992174
+    },
+    "University of Dar-es-Salaam Ground": {
+      "avg_first": 103.56628720502788,
+      "chase_rate": 0.6342642001660145
+    },
+    "University of Doha for Science and Technology": {
+      "avg_first": 156.71085813668526,
+      "chase_rate": 0.4783983556662319
+    },
+    "University of Lagos Cricket Oval": {
+      "avg_first": 136.83041895848726,
+      "chase_rate": 0.4316284924609365
+    },
+    "VRA Ground": {
+      "avg_first": 162.64393849559272,
+      "chase_rate": 0.5123522668880194
+    },
+    "Vassil Levski National Sports Academy": {
+      "avg_first": 183.56628720502786,
+      "chase_rate": 0.7175975334993479
+    },
+    "Velden Cricket Ground": {
+      "avg_first": 161.90734203541035,
+      "chase_rate": 0.5085515693840134
+    },
+    "Vidarbha Cricket Association Stadium": {
+      "avg_first": 155.10561449766672,
+      "chase_rate": 0.33006884717601026
+    },
+    "Wanderers": {
+      "avg_first": 151.46590774338907,
+      "chase_rate": 0.6018617336653623
+    },
+    "Wanderers Cricket Ground": {
+      "avg_first": 151.5690556330898,
+      "chase_rate": 0.5235065539227759
+    },
+    "Wankhede Stadium": {
+      "avg_first": 174.49533408251878,
+      "chase_rate": 0.540471327165511
+    },
+    "Warner Park": {
+      "avg_first": 155.34253189002388,
+      "chase_rate": 0.757940742999441
+    },
+    "West End Park International Cricket Stadium": {
+      "avg_first": 149.1559089292067,
+      "chase_rate": 0.5522234080398435
+    },
+    "Western Australia Cricket Association Ground": {
+      "avg_first": 156.25649235147634,
+      "chase_rate": 0.515881485998882
+    },
+    "Westpac Stadium": {
+      "avg_first": 161.3409086153138,
+      "chase_rate": 0.5065394354113044
+    },
+    "White Hill Field": {
+      "avg_first": 137.9498102691806,
+      "chase_rate": 0.5671321000830073
+    },
+    "Willowmoore Park": {
+      "avg_first": 146.9247154037709,
+      "chase_rate": 0.5381981501245109
+    },
+    "Windsor Park": {
+      "avg_first": 161.82792092290492,
+      "chase_rate": 0.3730243431417391
+    },
+    "YSD-UKM Cricket Oval": {
+      "avg_first": 119.07181785841338,
+      "chase_rate": 0.624446816079687
+    },
+    "Yeonhui Cricket Ground": {
+      "avg_first": 131.29545419392758,
+      "chase_rate": 0.37439871313009454
+    },
+    "Zahur Ahmed Chowdhury Stadium": {
+      "avg_first": 147.5690556330898,
+      "chase_rate": 0.48504501546123746
+    },
+    "Zayed Cricket Stadium": {
+      "avg_first": 151.89985770188545,
+      "chase_rate": 0.6440990750622554
+    },
+    "Zhejiang University of Technology Cricket Field": {
+      "avg_first": 166.27954464603346,
+      "chase_rate": 0.36111704019921737
+    }
+  },
+  "venue_default": {
+    "avg_first": 154.9590892920669,
+    "chase_rate": 0.5222340803984348
+  },
+  "elo": {
+    "Australia": 1691.0458926961658,
+    "New Zealand": 1619.6111633909318,
+    "England": 1765.8843723570692,
+    "South Africa": 1664.7771468257167,
+    "Sri Lanka": 1524.1672762315939,
+    "Pakistan": 1671.124454391331,
+    "India": 1775.626020654427,
+    "West Indies": 1587.4665613319694,
+    "Kenya": 1634.5216998780493,
+    "Bangladesh": 1522.3083869024874,
+    "Scotland": 1519.319640185786,
+    "Zimbabwe": 1539.100845193449,
+    "Kolkata Knight Riders": 1523.008523279518,
+    "Royal Challengers Bengaluru": 1620.7180897249327,
+    "Chennai Super Kings": 1479.1104911968669,
+    "Punjab Kings": 1515.810123171763,
+    "Rajasthan Royals": 1514.4711054696352,
+    "Delhi Capitals": 1522.5403412532096,
+    "Mumbai Indians": 1476.881903262002,
+    "Deccan Chargers": 1434.7312615809574,
+    "Bermuda": 1618.4609056297388,
+    "Ireland": 1541.1374817351684,
+    "Netherlands": 1526.0969796226386,
+    "Canada": 1571.4194749102192,
+    "Kochi Tuskers Kerala": 1475.8859368211938,
+    "Pune Warriors": 1379.8756116324184,
+    "Sunrisers Hyderabad": 1534.9363621906698,
+    "Nepal": 1640.9404677031753,
+    "Hong Kong": 1576.4192790771556,
+    "United Arab Emirates": 1598.5986602776998,
+    "Papua New Guinea": 1538.9450823536763,
+    "Oman": 1485.7445825501056,
+    "Rising Pune Supergiant": 1522.7627122597771,
+    "Gujarat Lions": 1470.2210479654395,
+    "ICC World XI": 1488.5966604723737,
+    "United States of America": 1589.298258835703,
+    "Philippines": 1477.007977816912,
+    "Vanuatu": 1428.5215886265426,
+    "Ghana": 1431.1621489184568,
+    "Namibia": 1552.2646897780776,
+    "Uganda": 1735.792216439044,
+    "Botswana": 1458.0312899969567,
+    "Nigeria": 1578.7521741543333,
+    "Germany": 1574.159635666895,
+    "Italy": 1546.7282004710628,
+    "Guernsey": 1548.5809357442295,
+    "Jersey": 1633.7236279614397,
+    "Denmark": 1557.0845678603605,
+    "Norway": 1519.1859972461566,
+    "Thailand": 1410.177346677292,
+    "Malaysia": 1598.8024827144504,
+    "Maldives": 1360.4985681003197,
+    "Singapore": 1445.558285734396,
+    "Qatar": 1561.3743358097781,
+    "Kuwait": 1569.7913242117154,
+    "Cayman Islands": 1537.7476730829856,
+    "Portugal": 1655.5007451345348,
+    "Spain": 1673.8774269232827,
+    "Gibraltar": 1374.504322096144,
+    "Bhutan": 1402.3228719500403,
+    "Saudi Arabia": 1572.9821646296537,
+    "Bahrain": 1614.6761870113614,
+    "Iran": 1489.7000156872775,
+    "Isle of Man": 1504.3789180861434,
+    "Belgium": 1590.7799640565831,
+    "Luxembourg": 1407.7802927141445,
+    "Czech Republic": 1485.8297573822103,
+    "Bulgaria": 1365.1984176600279,
+    "Romania": 1579.1452797014886,
+    "Austria": 1596.6115387017553,
+    "Greece": 1417.0044593107611,
+    "Serbia": 1344.3098364211335,
+    "Malta": 1449.8944793700355,
+    "France": 1549.0416862623274,
+    "Sweden": 1527.5540947671452,
+    "Rwanda": 1486.1241510900597,
+    "Finland": 1511.298790170645,
+    "Hungary": 1424.6334373109084,
+    "Estonia": 1436.266512518358,
+    "Cyprus": 1479.5923405725346,
+    "Seychelles": 1426.7808021151711,
+    "Malawi": 1442.0128674279647,
+    "Lesotho": 1358.2384745440365,
+    "Swaziland": 1452.7158128679866,
+    "Sierra Leone": 1345.393450292367,
+    "Switzerland": 1538.4339739049603,
+    "Tanzania": 1573.0693301987778,
+    "Mozambique": 1463.1727692976565,
+    "Cameroon": 1420.1448807480706,
+    "Belize": 1443.9892448485496,
+    "Bahamas": 1417.0022160927597,
+    "Argentina": 1527.4571649060094,
+    "Panama": 1458.6767157967809,
+    "Lucknow Super Giants": 1458.6180383924236,
+    "Gujarat Titans": 1570.4284517991925,
+    "Israel": 1451.9610135253963,
+    "Turkey": 1359.0165735891237,
+    "Croatia": 1376.710386834496,
+    "Slovenia": 1361.3232156729996,
+    "Cook Islands": 1505.3019532852943,
+    "Fiji": 1451.1650238561979,
+    "Samoa": 1440.118215065735,
+    "Japan": 1593.6540562598277,
+    "Indonesia": 1384.9380186543563,
+    "South Korea": 1442.9413208628262,
+    "Mali": 1380.5803939033503,
+    "St Helena": 1423.1045276667348,
+    "Gambia": 1434.4096396572986,
+    "Eswatini": 1472.43734202521,
+    "China": 1392.1853241530737,
+    "Myanmar": 1327.3177086896021,
+    "Mongolia": 1346.469151482441,
+    "Chile": 1479.0122822467633,
+    "Mexico": 1447.498852295851,
+    "Cambodia": 1402.116298336255,
+    "Costa Rica": 1412.0065397923854,
+    "Brazil": 1462.9198254582427,
+    "Ivory Coast": 1391.0705687544614,
+    "Suriname": 1431.1263264198394,
+    "Turks and Caicos Island": 1486.6025961800756,
+    "Timor-Leste": 1418.1179218433979,
+    "Zambia": 1475.4458812962105,
+    "Uzbekistan": 1451.509876164379,
+    "Peru": 1477.2874132404936
+  },
+  "defaults": {
+    "dot_pct_last12": 0.4166666666666667
+  }
+}
