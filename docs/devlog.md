@@ -347,3 +347,24 @@ The consistency gap measures disagreement between models, not how often either m
 - Review model artifacts and documentation.
 - Check that model loading works correctly.
 - Continue with the next planned project session.
+
+
+# Day 16 — Development Log
+
+- Created replay artifact from test-period matches.
+- Loaded replay data into the FastAPI application.
+- Added match listing and match replay endpoints.
+- Verified replay output using API requests.
+- Created API tests using FastAPI `TestClient`.
+- Fixed response handling by parsing responses with `.json()`.
+- Ran the full test suite: **17 passed**.
+
+## Learning
+- API testing with `TestClient`
+- HTTP 422 validation
+- Probability invariants
+- Monotonicity checks
+- JSON response parsing
+
+## Reflection
+All API tests passed. A Starlette deprecation warning remains but does not affect test execution.

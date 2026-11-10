@@ -274,3 +274,26 @@ The batting-first model was compared against the chase model using the final fir
 | 90th percentile gap | 18.05 percentage points |
 
 The average consistency gap is a diagnostic of agreement between the two models. It is not a measure of accuracy.
+
+
+# Day 16 — Results
+
+## Completed
+- Generated replay dataset for 1,133 matches (2025–2026).
+- Implemented `GET /matches`.
+- Implemented `GET /matches/{match_id}/replay`.
+- Verified replay API responses.
+- Added 5 API tests covering:
+  - Probability sum to 1
+  - Invalid input validation (HTTP 422)
+  - Target reached rule
+  - Target monotonicity
+  - Wicket monotonicity
+
+## Test Results
+- **17 tests passed**
+- 0 failures
+- 1 Starlette deprecation warning
+
+## Status
+Day 16 completed. API tests are green.

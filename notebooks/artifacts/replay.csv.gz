@@ -1,0 +1,18 @@
+[
+    "match_id",
+    "date",
+    "venue",
+    "innings",
+    "batting_team",
+    "bowling_team",
+    "balls_bowled",
+    "runs",
+    "wkts",
+    "p_bat_first_win",
+    "q10",
+    "q50",
+    "q90",
+    "is_wicket",
+    "is_six",
+    "is_four",
+]
