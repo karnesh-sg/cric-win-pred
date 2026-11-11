@@ -297,3 +297,16 @@ The average consistency gap is a diagnostic of agreement between the two models.
 
 ## Status
 Day 16 completed. API tests are green.
+
+# Day 17 — Results
+
+## Completed
+- Built Streamlit live scenario dashboard.
+- Integrated both innings with FastAPI.
+- Added win probability bar and prediction factors.
+- Added first-innings projected score display.
+- Added overs-to-balls conversion.
+- Added API error handling.
+
+## Status
+Local API integration working.

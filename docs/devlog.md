@@ -368,3 +368,16 @@ The consistency gap measures disagreement between models, not how often either m
 
 ## Reflection
 All API tests passed. A Starlette deprecation warning remains but does not affect test execution.
+
+# Day 17 — Results
+
+## Completed
+- Built Streamlit live scenario dashboard.
+- Integrated both innings with FastAPI.
+- Added win probability bar and prediction factors.
+- Added first-innings projected score display.
+- Added overs-to-balls conversion.
+- Added API error handling.
+
+## Status
+Local API integration working.
