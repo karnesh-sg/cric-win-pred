@@ -28,8 +28,8 @@ jobs:
           pip install -e .
           pip install pytest ruff httpx
 
-    - name: Lint API files
-      run: ruff check src/cricketwp/api/main.py src/cricketwp/predictor.py
+      - name: Lint API files
+        run: ruff check --select E4,E7,E9,F src/cricketwp/api/main.py src/cricketwp/predictor.py
 
       - name: Run tests
         run: pytest -q
