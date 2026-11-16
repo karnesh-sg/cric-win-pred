@@ -1,7 +1,7 @@
 from pathlib import Path
+
 import pandas as pd
 from fastapi import FastAPI, HTTPException
-from fastapi import FastAPI
 from pydantic import BaseModel, Field
 
 from cricketwp.predictor import Predictor
@@ -157,12 +157,19 @@ def predict_chase(s: ChaseState):
         "bowling_team": s.bowling_team,
         "bowling_team_win_prob": 1 - p,
         "top_factors": factors,
+        "explanation_type": "xgboost_treeshap_raw_margin",
+        "explanation_note": (
+            "TreeSHAP contributions explain the uncalibrated "
+            "XGBoost raw margin (log-odds). The displayed win "
+            "probability is isotonic-calibrated and then adjusted "
+            "by cricket terminal-state rules."
+        ),
     }
 
 
 @app.post("/predict/first-innings")
 def predict_first_innings(s: FirstInningsState):
-    p = pred.first_innings(
+    p, projected_score, factors = pred.first_innings(
         batting_team=s.batting_team,
         bowling_team=s.bowling_team,
         venue=s.venue,
@@ -180,4 +187,14 @@ def predict_first_innings(s: FirstInningsState):
         "batting_team_win_prob": p,
         "bowling_team": s.bowling_team,
         "bowling_team_win_prob": 1 - p,
+        "projected_score": projected_score,
+        "top_factors": factors,
+        "explanation_type": "xgboost_treeshap_raw_margin",
+        "explanation_note": (
+            "TreeSHAP contributions explain the uncalibrated "
+            "XGBoost raw margin (log-odds) for the win-probability "
+            "classifier. The displayed win probability is "
+            "isotonic-calibrated. Score quantiles are predictions "
+            "from separate trained quantile models."
+        ),
     }

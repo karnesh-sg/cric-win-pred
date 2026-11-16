@@ -6,7 +6,7 @@ import pandas as pd
 import xgboost as xgb
 
 from cricketwp.features import add_state_features
-from cricketwp.predict import apply_rules, top_factors
+from cricketwp.predict import apply_rules
 
 
 class Predictor:
@@ -37,6 +37,62 @@ class Predictor:
         self.q90 = xgb.XGBRegressor()
         self.q90.load_model(str(f / "score_q90.json"))
 
+    @staticmethod
+    def _top_shap_factors(model, X, k=3):
+        """
+        Return the top k TreeSHAP feature contributions.
+
+        XGBoost pred_contribs returns contributions in raw-margin
+        (log-odds) space. The final column is the bias/base value,
+        which is excluded from the ranked feature list.
+
+        These values explain the raw classifier output before isotonic
+        calibration and cricket terminal-state rules. They are not
+        percentage-point contributions to the final calibrated probability.
+        """
+        booster = model.get_booster()
+
+        dmatrix = xgb.DMatrix(
+            X,
+            feature_names=list(X.columns),
+        )
+
+        contributions = booster.predict(
+            dmatrix,
+            pred_contribs=True,
+        )
+
+        # The predictor currently passes one match-state row.
+        feature_values = contributions[0, :-1]
+        feature_names = list(X.columns)
+
+        # Rank features by absolute SHAP contribution.
+        ranked_indices = np.argsort(np.abs(feature_values))[::-1][:k]
+
+        factors = []
+
+        for index in ranked_indices:
+            shap_value = float(feature_values[index])
+
+            factors.append(
+                {
+                    "feature": feature_names[index],
+                    "name": feature_names[index],
+                    "shap_value": shap_value,
+                    "impact": round(shap_value, 4),
+                    "direction": (
+                        "favors batting team"
+                        if shap_value > 0
+                        else "favors bowling team"
+                        if shap_value < 0
+                        else "neutral"
+                    ),
+                    "space": "raw_model_log_odds",
+                }
+            )
+
+        return factors
+
     def elo(self, team):
         return self.look["elo"].get(team, 1500.0)
 
@@ -60,7 +116,10 @@ class Predictor:
         runs_needed = target - runs
 
         # 2. Get venue statistics
-        venue_stats = self.look["venues"].get(venue, self.look["venue_default"])
+        venue_stats = self.look["venues"].get(
+            venue,
+            self.look["venue_default"],
+        )
 
         venue_avg_first = venue_stats["avg_first"]
         venue_chase_rate = venue_stats["chase_rate"]
@@ -72,7 +131,7 @@ class Predictor:
         if dot_pct_last12 is None:
             dot_pct_last12 = self.look["defaults"]["dot_pct_last12"]
 
-        # 5. Build the raw match-state DataFrame
+        # 5. Build raw match-state DataFrame
         s = pd.DataFrame(
             [
                 {
@@ -89,7 +148,7 @@ class Predictor:
                     "venue_avg_first": venue_avg_first,
                     "venue_chase_rate": venue_chase_rate,
                     "elo_diff": elo_diff,
-                    "target_vs_venue": target - venue_avg_first,
+                    "target_vs_venue": (target - venue_avg_first),
                 }
             ]
         )
@@ -97,7 +156,7 @@ class Predictor:
         # 6. Add engineered features
         s = add_state_features(s, chase=True)
 
-        # 7. Select features in the exact training order
+        # 7. Select features in exact training order
         features = [
             "runs_needed",
             "balls_left",
@@ -120,11 +179,16 @@ class Predictor:
         X = s[features]
 
         # 8. Predict raw probability
-        p = self.chase_model.predict_proba(X)[:, 1]
+        raw_p = self.chase_model.predict_proba(X)[:, 1]
 
         # 9. Apply isotonic calibration
         iso = self.iso_c
-        p = np.interp(p, iso["x"], iso["y"])
+
+        p = np.interp(
+            raw_p,
+            iso["x"],
+            iso["y"],
+        )
 
         # 10. Apply cricket terminal-state rules
         p = apply_rules(
@@ -134,17 +198,14 @@ class Predictor:
             wickets_in_hand=np.array([wickets_in_hand]),
         )
 
-        # 11. Return probability as a Python float
-        # 11. Calculate the top 3 factors
-        factors = top_factors(
+        # 11. Calculate model-specific TreeSHAP factors
+        factors = self._top_shap_factors(
             self.chase_model,
             X,
-            features,
             k=3,
-            pos="batting team",
         )
 
-        # 12. Return probability and top factors
+        # 12. Return probability and factors
         return float(p[0]), factors
 
     def first_innings(
@@ -165,7 +226,10 @@ class Predictor:
         wickets_in_hand = 10 - wickets
 
         # 2. Get venue statistics
-        venue_stats = self.look["venues"].get(venue, self.look["venue_default"])
+        venue_stats = self.look["venues"].get(
+            venue,
+            self.look["venue_default"],
+        )
 
         venue_avg_first = venue_stats["avg_first"]
         venue_chase_rate = venue_stats["chase_rate"]
@@ -173,7 +237,7 @@ class Predictor:
         # 3. Calculate ELO difference
         elo_diff_bat = self.elo(batting_team) - self.elo(bowling_team)
 
-        # 4. Default dot-ball percentage
+        # 4. Get default dot-ball percentage
         if dot_pct_last12 is None:
             dot_pct_last12 = self.look["defaults"]["dot_pct_last12"]
 
@@ -219,15 +283,41 @@ class Predictor:
         X = s[features]
 
         # 8. Predict raw probability
-        p = self.first.predict_proba(X)[:, 1]
+        raw_p = self.first.predict_proba(X)[:, 1]
 
         # 9. Apply isotonic calibration
         iso = self.iso_f
 
-        p = np.interp(p, iso["x"], iso["y"])
+        p = np.interp(
+            raw_p,
+            iso["x"],
+            iso["y"],
+        )
 
-        # 10. Return Python float
-        return float(p[0])
+        # 10. Predict projected score using trained quantile models
+        q10_pred = float(self.q10.predict(X)[0])
+        q50_pred = float(self.q50.predict(X)[0])
+        q90_pred = float(self.q90.predict(X)[0])
+
+        # Keep the quantile range ordered in case models cross
+        q10_pred, q50_pred, q90_pred = sorted([q10_pred, q50_pred, q90_pred])
+
+        projected_score = {
+            "q10": int(round(q10_pred)),
+            "q50": int(round(q50_pred)),
+            "q90": int(round(q90_pred)),
+        }
+
+        # 11. Explain win-probability classifier using TreeSHAP
+        # Note: quantile score models are separate models.
+        factors = self._top_shap_factors(
+            self.first,
+            X,
+            k=3,
+        )
+
+        # 12. Return probability, score projection, and factors
+        return float(p[0]), projected_score, factors
 
     def teams(self):
         return sorted(self.look["elo"].keys())

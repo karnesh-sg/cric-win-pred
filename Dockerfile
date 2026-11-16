@@ -7,6 +7,7 @@ COPY requirements-api.txt .
 RUN pip install --no-cache-dir -r requirements-api.txt
 
 COPY src ./src
+COPY artifacts ./artifacts
 
 ENV PYTHONPATH=/app/src
 
