@@ -4,5 +4,7 @@ __pycache__/
 /data/
 mlruns/
 .env
+.env.*
+!.env.example
 .pytest_cache/
 .ruff_cache/
