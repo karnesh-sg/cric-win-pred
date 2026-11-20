@@ -310,3 +310,379 @@ Day 16 completed. API tests are green.
 
 ## Status
 Local API integration working.
+
+
+## 1. Overall Results
+
+During Days 18–23, the cricket win-probability project was extended with interactive replay, API deployment, first-innings score prediction, dashboard improvements, hypothetical delivery simulation and model transparency.
+
+The application now combines trained ML models, a FastAPI backend and a Streamlit frontend.
+
+### Major deliverables
+
+| Feature | Result |
+|---|---|
+| Ball-by-ball match replay | Completed |
+| Dockerized API | Completed |
+| CI integration | Passed |
+| API deployment | Verified |
+| First-innings quantile predictions | Integrated |
+| Tarazu dashboard | Implemented |
+| What-if simulator | Integrated |
+| Model Trust Panel | Verified |
+| Automated tests | 21 passed |
+
+---
+
+## Day 18 — Match Replay Results
+
+### Delivered
+- Interactive ball-by-ball match replay.
+- Match selection.
+- Replay slider.
+- Playback functionality.
+- Win-probability graph.
+- Wicket and six markers.
+- Current-delivery indicator.
+
+### Outcome
+
+Users can inspect how the predicted probability changes as a match progresses.
+
+The chart displays the batting-first team's win probability and the opposing team's complementary probability.
+
+**Result: Replay functionality successfully integrated and manually verified.**
+
+---
+
+##  Day 19 — Docker and CI Results
+
+### Delivered
+- Dockerized FastAPI application.
+- Successful Docker image build.
+- Running API container.
+- Health endpoint verification.
+- Model metadata verification.
+- Prediction endpoint testing.
+- Swagger UI verification.
+- GitHub Actions CI verification.
+
+### Container details
+
+| Item | Value |
+|---|---|
+| Container | `cric-win-pred-api` |
+| Host port | `8001` |
+| Existing container port | `8000` |
+| Model version | `1.0.0` |
+
+### Outcome
+
+The prediction API can run inside a Docker container and its main endpoints were verified.
+
+GitHub Actions completed successfully.
+
+**Result: Docker and CI integration completed.**
+
+---
+
+## Day 20 — Deployment Results
+
+### Delivered
+- Deployed FastAPI prediction service.
+- Verified deployed chase prediction endpoint.
+- Verified deployed first-innings prediction endpoint.
+- Checked production API responses.
+
+### Production API
+
+https://cric-win-pred.onrender.com
+
+### Outcome
+
+The prediction backend became accessible through a deployed API.
+
+**Result: Deployment verified.**
+
+---
+
+##  Day 21 — First-Innings Prediction Results
+
+### Delivered
+
+Integrated trained quantile models into the dashboard.
+
+| Quantile | Interpretation |
+|---|---|
+| Q10 | Lower estimated score |
+| Q50 | Median estimated score |
+| Q90 | Upper estimated score |
+
+### Outcome
+
+The dashboard now displays a predicted first-innings score range using trained quantile models instead of a manually calculated heuristic.
+
+These estimates are conditional on the current match state.
+
+**Result: First-innings score projection integrated and manually verified.**
+
+---
+
+##  Day 22 — Dashboard Results
+
+### Delivered
+
+Created the branded cricket analytics dashboard:
+
+**Tarazu · तराज़ू · தராசு**
+
+**CRICKET INTELLIGENCE PLATFORM**
+
+Integrated dashboard functionality:
+
+- Live match-state prediction.
+- Win-probability visualization.
+- What-if analysis interface.
+- First-innings score projection.
+- Ball-by-ball replay.
+- Model feature explanations.
+- Premium dark UI.
+
+### Outcome
+
+The frontend brings the project's prediction and analysis capabilities together in one application.
+
+**Result: Dashboard integration and visual improvements completed.**
+
+---
+
+##  Day 23 — What-If Simulator Results
+
+### Delivered
+
+Implemented the `POST /what-if/chase` API.
+
+The simulator evaluates six hypothetical next-ball outcomes.
+
+| Outcome | Description |
+|---|---|
+| Dot | No run |
+| 1 | One run |
+| 2 | Two runs |
+| 4 | Four runs |
+| 6 | Six runs |
+| Wicket | One wicket lost |
+
+For each outcome, the API returns:
+
+- Hypothetical batting-team win probability.
+- Change from the current win probability.
+
+The Streamlit dashboard displays these results as six interactive scenario cards.
+
+### Outcome
+
+The user can explore how different possible deliveries could change the predicted match outcome.
+
+The cards dynamically update when the match state changes.
+
+**Result: What-if simulator successfully integrated and verified.**
+
+---
+
+##  Day 23 — Model Trust and Transparency Results
+
+### Chase model test metrics
+
+The shared `meta.json` records the following held-out test results:
+
+| Metric | Value |
+|---|---:|
+| ROC AUC | **0.9377** |
+| Log Loss | **0.3217** |
+| Brier Score | **0.1029** |
+| Expected Calibration Error | **0.0319** |
+
+### Model metadata
+
+| Property | Value |
+|---|---|
+| Model version | `1.0.0` |
+| Metadata date | `2026-11-09` |
+| Calibration method | Isotonic |
+
+### Interpretation
+
+- ROC AUC measures the model's ability to distinguish between winning and losing outcomes.
+- Log loss evaluates the quality of predicted probabilities.
+- Brier score measures squared probability error.
+- ECE measures the difference between predicted confidence and observed outcome frequency.
+
+Lower log loss, Brier score and ECE are desirable. Higher ROC AUC is desirable.
+
+**Important:** These are chase-model test metrics. First-innings test metrics are not recorded in the shared metadata file and are not claimed here.
+
+### Trust Panel
+
+The dashboard now explains:
+
+- Model evaluation metrics.
+- Calibration.
+- Quantile predictions.
+- TreeSHAP explanations.
+- What-if assumptions.
+- Known limitations.
+
+**Result: Model Trust Panel visually verified.**
+
+---
+
+## 9. Final Testing Results
+
+### Automated testing
+
+Command:
+
+`pytest -q`
+
+<badge color="success">21 PASSED</badge>
+
+| Test result | Value |
+|---|---:|
+| Passed | 21 |
+| Failed | 0 |
+| Runtime | 7.42 seconds |
+| Warnings | 1 |
+
+### Warning
+
+One non-blocking deprecation warning:
+
+Starlette currently warns that using `httpx` with `starlette.testclient` is deprecated and recommends installing `httpx2`.
+
+This does not represent a failing test.
+
+### Manual verification
+
+| Component | Result |
+|---|---|
+| Live chase prediction | Verified |
+| What-if simulator | Verified |
+| Dynamic scenario updates | Verified |
+| Model Trust Panel | Verified |
+| First-innings Q10/Q50/Q90 | Verified |
+| Replay slider | Verified |
+| Replay playback | Verified |
+| Probability graph | Verified |
+
+---
+
+## 10. Technical Limitations and Future Improvements
+
+1. Record first-innings held-out evaluation metrics separately from chase-model metrics.
+2. Continue monitoring model performance and calibration on future matches.
+3. Investigate the Starlette/httpx deprecation warning and update dependencies compatibly.
+4. Continue improving what-if simulation assumptions and validation.
+5. Evaluate model performance across different match phases, venues and teams.
+6. Continue improving production reliability, API monitoring and dashboard responsiveness.
+
+---
+
+## Final Status
+
+The project now has an interactive replay system, deployed API, first-innings quantile predictions, professional dashboard, what-if simulator and model transparency interface.
+
+**Automated tests: 21 passed, 0 failed.**
+
+## Day 24 — Model Trust, Failure Analysis & Expert Review
+
+### 1. Production model evaluation
+
+Created a dedicated trust evaluation report using the production chase prediction pipeline.
+
+**Held-out test set**
+
+| Metric | Production model | Constant baseline |
+|---|---:|---:|
+| Log loss | 0.321717 | 0.692339 |
+| Brier score | 0.102873 | 0.249596 |
+| ROC AUC | 0.937680 | 0.500000 |
+| ECE | 0.031884 | 0.019290 |
+
+- Test states: 114,440
+- Test matches: 1,133
+- Model version: 1.0.0
+- Evaluation date: 9 November 2026
+
+The baseline predicts a constant probability equal to the training-set chase-win frequency.
+
+The production model substantially improves log loss, Brier score and ROC AUC over this baseline. The baseline's lower ECE does not imply better predictive performance: a constant prediction has no discriminatory ability.
+
+Metrics were reproduced using the shared evaluation implementation and production prediction pipeline, including isotonic calibration and terminal-state rules.
+
+### 2. Reliability analysis
+
+Generated a nine-bin quantile-based reliability report.
+
+| Predicted probability | Observed win rate | States |
+|---:|---:|---:|
+| 0.005344 | 0.003003 | 22,976 |
+| 0.074377 | 0.057724 | 11,555 |
+| 0.166440 | 0.186331 | 13,417 |
+| 0.302443 | 0.369729 | 9,296 |
+| 0.469509 | 0.574116 | 12,440 |
+| 0.704890 | 0.772608 | 13,712 |
+| 0.857832 | 0.888943 | 8,158 |
+| 0.960074 | 0.963926 | 13,112 |
+| 0.997312 | 0.995703 | 9,774 |
+
+The reliability analysis shows that calibration varies across probability ranges. In particular, the middle probability groups show underconfidence, where observed win frequencies exceed average predicted probabilities.
+
+The number of bins is nine because duplicate probability boundaries reduce the number of distinct quantile groups.
+
+### 3. Trust report and API
+
+Created `artifacts/trust.json` containing:
+
+- Model version and evaluation date.
+- Production test metrics.
+- Constant-baseline metrics and definition.
+- Reliability-bin data.
+- Number of test states and matches.
+- Known evaluation limitations.
+
+Added the `GET /trust` API endpoint to expose this report.
+
+Added API tests for report availability, metric validity and comparison against the baseline.
+
+### 4. Streamlit trust dashboard
+
+Integrated the trust report into the Tarazu dashboard under **Can I Trust This?**
+
+Implemented:
+
+- API-backed performance metrics.
+- Model-versus-baseline comparison.
+- Reliability curve.
+- Expandable reliability-bin table.
+- Evaluation sample counts.
+- Calibration explanation.
+- First-innings quantile-model explanation.
+- TreeSHAP explanation and interpretation caveats.
+- What-if simulator assumptions.
+- Known limitations and intended-use disclosure.
+
+The Live Scenario, Match Replay and Can I Trust This? workspace modes were verified.
+
+### 5. Failure analysis
+
+Created a failure-analysis workflow using:
+
+- `scripts/failures.py`
+- `scripts/plot_failures.py`
+- `docs/failure.md`
+- `docs/figs/`
+
+Generated five visualizations covering matches:
+
+- 148

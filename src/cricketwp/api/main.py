@@ -5,10 +5,23 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from cricketwp.predictor import Predictor
+import json
+from pathlib import Path
+
+import pandas as pd
 
 
 # Locate artifacts from project root
 ARTIFACTS = Path(__file__).resolve().parents[3] / "artifacts"
+
+# Load trust report once
+TRUST_PATH = ARTIFACTS / "trust.json"
+
+if TRUST_PATH.exists():
+    with open(TRUST_PATH, encoding="utf-8") as f:
+        trust_data = json.load(f)
+else:
+    trust_data = None
 
 # Load models once
 pred = Predictor(folder=str(ARTIFACTS))
@@ -102,6 +115,17 @@ def get_model_info():
     return pred.model_info()
 
 
+@app.get("/trust")
+def get_trust():
+    if trust_data is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Trust report is not available",
+        )
+
+    return trust_data
+
+
 @app.get("/matches")
 def get_matches():
     return {"matches": matches_df.to_dict(orient="records")}
@@ -164,6 +188,30 @@ def predict_chase(s: ChaseState):
             "probability is isotonic-calibrated and then adjusted "
             "by cricket terminal-state rules."
         ),
+    }
+
+
+@app.post("/what-if/chase")
+def what_if_chase(s: ChaseState):
+    base, outcomes = pred.what_if_chase(
+        batting_team=s.batting_team,
+        bowling_team=s.bowling_team,
+        venue=s.venue,
+        runs=s.runs,
+        wickets=s.wickets,
+        balls_bowled=s.balls_bowled,
+        target=s.target,
+        runs_last12=s.runs_last12,
+        wkts_last12=s.wkts_last12,
+        dot_pct_last12=s.dot_pct_last12,
+        partnership_runs=s.partnership_runs,
+    )
+
+    return {
+        "batting_team": s.batting_team,
+        "bowling_team": s.bowling_team,
+        "current_batting_team_win_prob": base,
+        "outcomes": outcomes,
     }
 
 

@@ -381,3 +381,420 @@ All API tests passed. A Starlette deprecation warning remains but does not affec
 
 ## Status
 Local API integration working.
+
+## Day 18 — Ball-by-Ball Match Replay
+
+### Objective
+Build an interactive match replay system to visualize how win probability changes throughout a T20 match.
+
+### Implementation
+- Integrated ball-by-ball replay data into the Streamlit dashboard.
+- Added match selection functionality.
+- Implemented a replay slider to navigate through deliveries.
+- Added a Play button for match playback.
+- Visualized batting-first team win probability throughout the match.
+- Displayed the opposing team's probability as `1 - p`.
+- Added event markers for:
+  - Wickets
+  - Sixes
+  - Important match moments
+- Added a vertical marker representing the current delivery.
+
+### Issues resolved
+- Fixed missing `over` column in key-moment calculations.
+- Fixed undefined `teams` variable in replay mode.
+- Improved replay state handling and chart updates.
+
+### Verification
+- Replay slider verified.
+- Play functionality verified.
+- Probability graph and event markers visually checked.
+
+**Status: Completed**
+
+---
+
+## Day 19 — Dockerization and CI Integration
+
+### Objective
+Containerize the prediction API and establish automated testing through CI.
+
+### Implementation
+- Created Docker configuration for the FastAPI application.
+- Built the Docker image.
+- Started the API container.
+- Resolved host-port conflicts between existing containers.
+- Ran the `cric-win-pred-api` container on host port `8001`, while the existing `cric-api` used port `8000`.
+- Verified API health.
+- Verified model metadata through `/model-info`.
+- Tested prediction endpoints.
+- Checked Swagger documentation.
+- Reviewed container logs.
+- Verified GitHub Actions workflow.
+
+### Verification
+- Docker container started successfully.
+- `/health` returned a healthy status.
+- Model version `1.0.0` confirmed.
+- Prediction endpoints responded successfully.
+- Swagger UI accessible.
+- GitHub Actions passed.
+
+**Status: Completed**
+
+---
+
+## Day 20 — API Deployment and Integration
+
+### Objective
+Make the trained prediction system accessible through a deployed API.
+
+### Implementation
+- Continued deployment and integration work for the FastAPI prediction service.
+- Verified the deployed API.
+- Checked chase prediction endpoint.
+- Checked first-innings prediction endpoint.
+- Verified API response structure and model loading.
+- Investigated deployment/runtime issues and corrected integration problems.
+
+### Deployment
+
+Production API:
+
+https://cric-win-pred.onrender.com
+
+### Verification
+- Deployed API responded successfully.
+- Chase prediction endpoint tested.
+- First-innings prediction endpoint tested.
+- Model version and prediction responses checked.
+
+**Status: Completed**
+
+---
+
+## Day 21 — First-Innings Prediction and Dashboard Integration
+
+### Objective
+Integrate first-innings score prediction into the cricket analytics application.
+
+### Implementation
+- Integrated the trained first-innings quantile prediction models.
+- Added Q10, Q50 and Q90 score projections to the dashboard.
+- Connected the Streamlit frontend with the FastAPI backend.
+- Improved the presentation of predicted score ranges.
+- Ensured the dashboard uses actual trained quantile-model predictions rather than a manually calculated heuristic.
+
+### Quantile interpretation
+
+- **Q10:** Lower estimated score boundary.
+- **Q50:** Median predicted score.
+- **Q90:** Upper estimated score boundary.
+
+These represent conditional score estimates, not guaranteed outcomes.
+
+### Verification
+- First-innings prediction endpoint checked.
+- Q10, Q50 and Q90 values verified in the dashboard.
+- Dashboard/API integration checked.
+
+**Status: Completed**
+
+---
+
+## Day 22 — Tarazu Dashboard and UI/UX Improvements
+
+### Objective
+Improve the dashboard into a professional cricket intelligence platform.
+
+### Implementation
+- Developed the premium dark dashboard interface.
+- Established the branding:
+
+  **Tarazu · तराज़ू · தராசு**
+
+  **CRICKET INTELLIGENCE PLATFORM**
+
+- Improved dashboard layout and visual hierarchy.
+- Integrated live match-state prediction.
+- Added probability visualization.
+- Integrated first-innings score projections.
+- Integrated match replay.
+- Added model explanation visualizations.
+- Improved scenario analysis and dashboard interactions.
+- Fixed UI rendering and state-management issues.
+
+### Verification
+- Dashboard loaded successfully.
+- Live scenario interaction checked.
+- Dynamic UI updates verified.
+- First-innings and replay sections checked.
+
+**Status: Completed**
+
+---
+
+## Day 23 — What-If Simulator and Model Trust Panel
+
+### Objective
+Build an interactive next-ball simulator and improve model transparency.
+
+### 1. What-If Prediction Engine
+
+Implemented a hypothetical next-delivery prediction system for the second innings.
+
+Six outcomes are evaluated:
+
+1. Dot ball
+2. One run
+3. Two runs
+4. Four runs
+5. Six runs
+6. Wicket
+
+For each hypothetical outcome, the system calculates:
+
+- Batting team's current win probability.
+- Win probability after the hypothetical delivery.
+- Change in win probability.
+
+### 2. FastAPI Integration
+
+Implemented endpoint:
+
+`POST /what-if/chase`
+
+The endpoint:
+- Accepts the current match state.
+- Evaluates six hypothetical legal-ball outcomes.
+- Returns the resulting win probabilities.
+- Calculates the difference from the current probability.
+- Handles terminal match states.
+
+### 3. Streamlit Integration
+
+- Integrated all six outcomes into the Tarazu dashboard.
+- Added individual outcome cards.
+- Displayed probability changes in percentage points.
+- Ensured the what-if results update when the user changes the match state and analyses the scenario.
+- Preserved the base prediction if the what-if request fails.
+
+### 4. Model Trust and Transparency Panel
+
+Added a dedicated Model Trust Panel.
+
+The panel displays the recorded held-out chase-model test metrics:
+
+| Metric | Value |
+|---|---:|
+| ROC AUC | 0.9377 |
+| Log Loss | 0.3217 |
+| Brier Score | 0.1029 |
+| ECE | 0.0319 |
+
+Model metadata:
+- Version: `1.0.0`
+- Metadata date: `2026-11-09`
+- Calibration: Isotonic calibration.
+
+The panel also explains:
+
+- Meaning of evaluation metrics.
+- Probability calibration.
+- First-innings quantile predictions.
+- TreeSHAP feature contributions.
+- What-if simulator assumptions.
+- Model limitations and intended use.
+
+### 5. Technical Accuracy and Transparency
+
+Documented important distinctions:
+
+- Chase test metrics must not be presented as first-innings test metrics.
+- TreeSHAP values explain raw model margin/log-odds, not direct calibrated probability percentage-point changes.
+- What-if outcomes are conditional hypothetical estimates, not probabilities of those delivery outcomes occurring.
+- The what-if simulation considers hypothetical legal deliveries.
+
+### 6. Final Testing
+
+Executed:
+
+`pytest -q`
+
+Result:
+
+`21 passed, 1 warning in 7.42s`
+
+The warning concerns Starlette's deprecated use of `httpx` with `starlette.testclient`, recommending `httpx2`.
+
+No test failures.
+
+### Manual Verification
+- What-if outcome cards verified.
+- Dynamic updates verified.
+- Model Trust Panel visually verified.
+- First-innings Q10/Q50/Q90 projections verified.
+- Match replay slider and Play functionality verified.
+- Probability graph verified.
+
+**Status: Completed**
+
+---
+
+## Overall Development Summary
+Major capabilities delivered:
+
+- Ball-by-ball match replay.
+- Dockerized API.
+- Automated CI testing.
+- Deployed prediction API.
+- First-innings quantile score predictions.
+- Professional Tarazu Streamlit dashboard.
+- Six-outcome what-if simulator.
+- Model Trust and Transparency Panel.
+
+**Latest automated test result: 21 passed, 0 failed.**
+
+
+## Day 24 — Model Trust, Failure Analysis & Expert Review
+
+### Objective
+
+Move beyond displaying win probabilities and make the model's reliability, evaluation evidence, failure cases and limitations visible to users and developers.
+
+### Work completed
+
+#### 1. Trust evaluation notebook
+
+Created `notebooks/trust.ipynb`.
+
+- Loaded the held-out chase test dataset.
+- Loaded the production XGBoost model and isotonic calibration artifacts.
+- Generated predictions through the production `chase_curve` pipeline.
+- Reproduced the evaluation metrics using the shared `cricketwp.eval` implementation.
+- Compared production predictions against a constant training-frequency baseline.
+- Generated quantile-based reliability bins.
+- Exported the report to `artifacts/trust.json`.
+
+An important evaluation detail was resolved: the saved test log loss uses probability clipping from the shared evaluation implementation. Using a different evaluation path initially produced a small discrepancy. Using the production evaluation implementation reproduced the saved metrics.
+
+#### 2. Trust API
+
+Updated `src/cricketwp/api/main.py`.
+
+- Added trust-report loading from `artifacts/trust.json`.
+- Added `GET /trust`.
+- Added a 503 response when the report is unavailable.
+- Verified the endpoint locally.
+
+#### 3. Trust API tests
+
+Updated `tests/test_api.py`.
+
+Added tests covering:
+
+- Trust endpoint response.
+- Report version and test-set dimensions.
+- Reliability-bin count.
+- Metric availability and valid ranges.
+- Model improvement over baseline for log loss, Brier score and ROC AUC.
+
+#### 4. Tarazu Streamlit integration
+
+Updated `app/streamlit_app.py`.
+
+Added the third workspace mode: **Can I Trust This?**
+
+Connected the panel to the `/trust` endpoint and implemented:
+
+- Dynamic evaluation metrics.
+- Baseline comparison.
+- Reliability curve.
+- Expandable reliability-bin table.
+- Evaluation sample and match counts.
+- Calibration and interpretation explanations.
+- Known limitations and intended-use disclosures.
+
+Verified all three workspace modes:
+
+1. Live Scenario
+2. Match Replay
+3. Can I Trust This?
+
+The dashboard's trust metrics and reliability visualizations were checked in the running application.
+
+#### 5. Failure gallery
+
+Created:
+
+- `scripts/failures.py`
+- `scripts/plot_failures.py`
+- `docs/failure.md`
+- Five visualizations under `docs/figs/`.
+
+Reviewed five representative historical failures, including overconfident and underestimated predictions.
+
+The investigation identified shortened-innings handling as a known issue in two examined cases.
+
+#### 6. Expert review
+
+Created:
+
+- `scripts/expert_review.py`
+- `docs/expert_review.md`
+
+Analysed 49,388 late-innings states across 1,038 matches, excluding two known shortened-innings cases.
+
+Investigated partnerships, wickets in hand and required-rate pressure.
+
+The results are directional observational evidence, not causal conclusions.
+
+### Important technical learning
+
+**Evaluation must match the production prediction pipeline.**
+
+The trust report uses calibrated predictions and terminal-state rules rather than reporting raw XGBoost metrics as though they were the deployed model's results.
+
+Also, calibration and discrimination are different properties. ROC AUC measures ranking ability, while ECE evaluates probability calibration. A model can perform strongly on one and still have calibration weaknesses in particular probability ranges.
+
+Ball-by-ball states are correlated within matches, so the number of states must not be confused with the number of independent matches.
+
+### Issues and limitations carried forward
+
+**F-01 — Shortened innings**
+
+The 120-ball assumption remains unresolved in historical feature generation and related prediction logic.
+
+The issue was documented and deferred during Day 24. It must be addressed before claiming validated support for shortened innings.
+
+Other limitations include calibration differences across probability ranges, historical distribution dependence and the observational nature of the expert review.
+
+### Verification
+
+Executed:
+
+`python -m pytest -v`
+
+Result:
+
+- 23 tests passed.
+- 0 failures.
+- 1 Starlette/httpx deprecation warning.
+
+Verified the `/trust` endpoint and visually checked the three Streamlit workspace modes.
+
+### Day 24 completion
+
+Completed the trust-report generation, API integration, dashboard visualization, failure gallery and expert review.
+
+The focus of Day 24 was model transparency and evidence-based evaluation, not claiming that all model limitations had been fixed.
+
+### Next direction
+
+Continue toward production-grade reliability by prioritising:
+
+- Resolving F-01 shortened-innings handling.
+- Deeper subgroup and match-level evaluation.
+- Calibration monitoring across competitions and match situations.
+- Further investigation of high-confidence prediction failures.
+- Maintaining regression tests as prediction logic evolves.

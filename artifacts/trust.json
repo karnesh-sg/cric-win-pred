@@ -1,0 +1,72 @@
+{
+  "version": "1.0.0",
+  "evaluation_date": "2026-11-09",
+  "metrics": {
+    "logloss": 0.32171693495108317,
+    "brier": 0.10287300925503678,
+    "auc": 0.9376797880767507,
+    "ece": 0.03188359776016573
+  },
+  "baseline": {
+    "logloss": 0.6923392213296289,
+    "brier": 0.24959605633460477,
+    "auc": 0.5,
+    "ece": 0.019289651438623323
+  },
+  "baseline_definition": "Constant probability equal to the training-set chase-win frequency",
+  "bins": [
+    {
+      "pred": 0.005344,
+      "actual": 0.003003,
+      "n": 22976
+    },
+    {
+      "pred": 0.074377,
+      "actual": 0.057724,
+      "n": 11555
+    },
+    {
+      "pred": 0.16644,
+      "actual": 0.186331,
+      "n": 13417
+    },
+    {
+      "pred": 0.302443,
+      "actual": 0.369729,
+      "n": 9296
+    },
+    {
+      "pred": 0.469509,
+      "actual": 0.574116,
+      "n": 12440
+    },
+    {
+      "pred": 0.70489,
+      "actual": 0.772608,
+      "n": 13712
+    },
+    {
+      "pred": 0.857832,
+      "actual": 0.888943,
+      "n": 8158
+    },
+    {
+      "pred": 0.960074,
+      "actual": 0.963926,
+      "n": 13112
+    },
+    {
+      "pred": 0.997312,
+      "actual": 0.995703,
+      "n": 9774
+    }
+  ],
+  "n_states": 114440,
+  "n_matches": 1133,
+  "known_limitations": [
+    "Metrics are calculated over ball-by-ball match states, not independent matches.",
+    "States from the same match are correlated.",
+    "Reliability bins use quantile grouping; duplicate probability boundaries reduce the number of bins.",
+    "Shortened-innings handling limitation F-01 remains unresolved."
+  ]
+}

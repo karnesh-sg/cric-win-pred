@@ -8,6 +8,15 @@ import xgboost as xgb
 from cricketwp.features import add_state_features
 from cricketwp.predict import apply_rules
 
+OUTCOMES = [
+    ("Dot", 0, 0),
+    ("1", 1, 0),
+    ("2", 2, 0),
+    ("4", 4, 0),
+    ("6", 6, 0),
+    ("Wicket", 0, 1),
+]
+
 
 class Predictor:
     def __init__(self, folder="artifacts"):
@@ -207,6 +216,75 @@ class Predictor:
 
         # 12. Return probability and factors
         return float(p[0]), factors
+
+    def what_if_chase(
+        self,
+        batting_team,
+        bowling_team,
+        venue,
+        runs,
+        wickets,
+        balls_bowled,
+        target,
+        runs_last12=0,
+        wkts_last12=0,
+        dot_pct_last12=None,
+        partnership_runs=0,
+    ):
+
+        if dot_pct_last12 is None:
+            dot_pct_last12 = self.look["defaults"]["dot_pct_last12"]
+
+        base, _ = self.chase(
+            batting_team=batting_team,
+            bowling_team=bowling_team,
+            venue=venue,
+            runs=runs,
+            wickets=wickets,
+            balls_bowled=balls_bowled,
+            target=target,
+            runs_last12=runs_last12,
+            wkts_last12=wkts_last12,
+            dot_pct_last12=dot_pct_last12,
+            partnership_runs=partnership_runs,
+        )
+
+        if runs >= target or balls_bowled >= 120 or wickets >= 10:
+            return base, []
+
+        results = []
+        for label, runs_scored, wicket in OUTCOMES:
+            new_runs = runs + runs_scored
+            new_wickets = wickets + wicket
+            new_balls_bowled = balls_bowled + 1
+            new_runs_last12 = round(runs_last12 * 11 / 12) + runs_scored
+            new_wkts_last12 = round(wkts_last12 * 11 / 12) + wicket
+            is_dot = 1 if runs_scored == 0 else 0
+            new_dot_pct_last12 = (dot_pct_last12 * 11 + is_dot) / 12
+            new_partnership_runs = 0 if wicket else partnership_runs + runs_scored
+            probability, _ = self.chase(
+                batting_team=batting_team,
+                bowling_team=bowling_team,
+                venue=venue,
+                runs=new_runs,
+                wickets=new_wickets,
+                balls_bowled=new_balls_bowled,
+                target=target,
+                runs_last12=new_runs_last12,
+                wkts_last12=new_wkts_last12,
+                dot_pct_last12=new_dot_pct_last12,
+                partnership_runs=new_partnership_runs,
+            )
+
+            results.append(
+                {
+                    "outcome": label,
+                    "batting_team_win_prob": probability,
+                    "change": probability - base,
+                }
+            )
+
+        return base, results
 
     def first_innings(
         self,
