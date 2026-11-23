@@ -1,0 +1,16 @@
+{
+    "method": "match-level cluster bootstrap",
+    "bootstrap_repetitions": 500,
+    "random_seed": 42,
+    "test_matches": 1133,
+    "test_states": 114440,
+    "baseline_probability": 0.4914322589185254,
+    "baseline_logloss": 0.6923392213296289,
+    "model_logloss": 0.32171693495108317,
+    "observed_improvement": 0.3706222863785457,
+    "confidence_level": 0.95,
+    "ci_lower": 0.3453195569094993,
+    "ci_upper": 0.3920918880895403,
+    "conclusion": "The entire confidence interval is above zero. The model's improvement over the baseline is supported by this match-level bootstrap.",
+    "evaluation": "Log loss with probabilities clipped to [1e-6, 1-1e-6]"
+}

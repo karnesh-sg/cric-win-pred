@@ -1,14 +1,46 @@
+import json
+import logging
+import time
+import uuid
 from pathlib import Path
-
+import numpy as np
 import pandas as pd
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from cricketwp.predictor import Predictor
-import json
-from pathlib import Path
+from collections import deque
+from threading import Lock
 
-import pandas as pd
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("cricketwp.api")
+
+stats_lock = Lock()
+
+api_stats = {
+    "prediction_count": 0,
+    "probability_sum": 0.0,
+}
+
+request_latencies = deque(maxlen=10000)
+
+
+def record_prediction(probability: float, innings: str, venue: str):
+    with stats_lock:
+        api_stats["prediction_count"] += 1
+        api_stats["probability_sum"] += float(probability)
+
+    logger.info(
+        json.dumps(
+            {
+                "event": "prediction",
+                "innings": innings,
+                "venue": venue,
+                "probability": round(float(probability), 6),
+            }
+        )
+    )
 
 
 # Locate artifacts from project root
@@ -27,6 +59,55 @@ else:
 pred = Predictor(folder=str(ARTIFACTS))
 
 app = FastAPI(title="Cricket Win Probability")
+
+
+@app.middleware("http")
+async def request_logging(request, call_next):
+    request_id = request.headers.get("x-request-id") or str(uuid.uuid4())
+
+    start_time = time.perf_counter()
+
+    try:
+        response = await call_next(request)
+
+        latency_ms = (time.perf_counter() - start_time) * 1000
+
+        with stats_lock:
+            request_latencies.append(latency_ms)
+
+        response.headers["x-request-id"] = request_id
+
+        log_record = {
+            "event": "http_request",
+            "request_id": request_id,
+            "method": request.method,
+            "path": request.url.path,
+            "status_code": response.status_code,
+            "latency_ms": round(latency_ms, 2),
+        }
+
+        logger.info(json.dumps(log_record))
+
+        return response
+
+    except Exception:
+        latency_ms = (time.perf_counter() - start_time) * 1000
+
+        logger.exception(
+            json.dumps(
+                {
+                    "event": "http_request_error",
+                    "request_id": request_id,
+                    "method": request.method,
+                    "path": request.url.path,
+                    "status_code": 500,
+                    "latency_ms": round(latency_ms, 2),
+                }
+            )
+        )
+
+        raise
+
 
 # Load replay data once
 REPLAY_PATH = ARTIFACTS / "replay.csv.gz"
@@ -97,6 +178,44 @@ def health():
     return {
         "status": "ok",
         "model_version": pred.model_info()["version"],
+    }
+
+
+@app.get("/ready")
+def readiness():
+    try:
+        info = pred.model_info()
+
+        return {
+            "status": "ready",
+            "model_version": info["version"],
+        }
+
+    except Exception:
+        logger.exception("Readiness check failed")
+
+        raise HTTPException(
+            status_code=503,
+            detail="Model is not ready",
+        )
+
+
+@app.get("/stats")
+def get_stats():
+    with stats_lock:
+        count = api_stats["prediction_count"]
+
+        mean_probability = api_stats["probability_sum"] / count if count > 0 else None
+
+        latencies = list(request_latencies)
+
+    p95_latency = float(np.percentile(latencies, 95)) if latencies else None
+
+    return {
+        "prediction_count": count,
+        "mean_probability": (round(mean_probability, 6) if mean_probability is not None else None),
+        "p95_latency_ms": (round(p95_latency, 2) if p95_latency is not None else None),
+        "latency_sample_size": len(latencies),
     }
 
 
@@ -175,6 +294,8 @@ def predict_chase(s: ChaseState):
         partnership_runs=s.partnership_runs,
     )
 
+    record_prediction(p, "chase", s.venue)
+
     return {
         "batting_team": s.batting_team,
         "batting_team_win_prob": p,
@@ -229,6 +350,8 @@ def predict_first_innings(s: FirstInningsState):
         dot_pct_last12=s.dot_pct_last12,
         partnership_runs=s.partnership_runs,
     )
+
+    record_prediction(p, "first_innings", s.venue)
 
     return {
         "batting_team": s.batting_team,

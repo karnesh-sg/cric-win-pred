@@ -686,3 +686,77 @@ Created a failure-analysis workflow using:
 Generated five visualizations covering matches:
 
 - 148
+
+## H1 — Match-Level Bootstrap Confidence Intervals
+
+### Method
+- Sampling unit: complete match (cluster bootstrap)
+- Test matches: 1,133
+- Test delivery states: 114,440
+- Bootstrap repetitions: 500
+- Random seed: 42
+- Confidence level: 95%
+- Evaluation: log loss, probabilities clipped to [1e-6, 1-1e-6]
+
+### Results
+
+| Metric | Result |
+|---|---:|
+| Baseline log loss | 0.692339 |
+| Production model log loss | 0.321717 |
+| Improvement | 0.370622 |
+| 95% CI lower bound | 0.345320 |
+| 95% CI upper bound | 0.392092 |
+
+### Interpretation
+
+The entire 95% confidence interval for the improvement
+is above zero. The match-level bootstrap supports the
+production model's improvement over the constant
+training-set baseline.
+
+### H1 — Match-level bootstrap: XGBoost vs logistic regression
+
+**Evaluation setup**
+- Test matches: 1,133
+- Test states: 114,440
+- Bootstrap repetitions: 500
+- Random seed: 42
+- Resampling unit: complete matches, sampled with replacement
+- Metric: log loss
+- Gain: logistic baseline log loss − XGBoost log loss
+
+| Metric | Result |
+|---|---:|
+| Mean XGBoost log loss | 0.325625 |
+| Mean logistic regression log loss | 0.311301 |
+| Mean gain | -0.014324 |
+| 95% confidence interval | [-0.024896, -0.003211] |
+
+**Conclusion:** The entire 95% confidence interval is below zero. Logistic regression outperforms XGBoost in log loss on this test set, and the match-level bootstrap supports this difference. The more complex model should not automatically be considered superior to the simpler baseline.
+
+### Rolling season-by-season backtest
+
+Method:
+- Train on all matches strictly before each test year.
+- Test on the matches within that year.
+- Fixed hyperparameters from Day 10.
+- Fixed 122 trees; no early stopping on test data.
+- Date-safe venue priors and date-snapshot Elo.
+- Raw XGBoost probabilities; no isotonic calibration applied.
+
+| Year | Train matches | Test matches | Log loss | Brier | AUC | ECE |
+|---|---:|---:|---:|---:|---:|---:|
+| 2021 | 1,604 | 330 | 0.3777 | 0.1214 | 0.9129 | 0.0301 |
+| 2022 | 1,934 | 482 | 0.4549 | 0.1454 | 0.8790 | 0.0598 |
+| 2023 | 2,416 | 395 | 0.3888 | 0.1260 | 0.9067 | 0.0340 |
+| 2024 | 2,811 | 651 | 0.3693 | 0.1170 | 0.9155 | 0.0271 |
+| 2025 | 3,462 | 559 | 0.3633 | 0.1156 | 0.9204 | 0.0315 |
+
+Interpretation:
+Model performance is reasonably stable across 2021 and 2023–2025, with log loss ranging from 0.3633 to 0.3888 and ECE from 0.0271 to 0.0340. 2022 is clearly the weakest year, with log loss of 0.4549, ECE of 0.0598 and AUC of 0.8790, indicating a meaningful deterioration in both predictive performance and calibration. The available metrics do not establish the cause; changes in scoring patterns, venue distribution or match composition during 2022 are possible explanations worth investigating.
+
+Artifacts:
+- `reports/rolling_backtest.csv`
+- `reports/rolling_backtest.png`
+- `scripts/rolling_backtest.py`
