@@ -5,9 +5,10 @@ import pandas as pd
 from cricketwp.data.parse import parse_match
 
 
-def main():
-    raw_dir = Path("data/raw")
-    output_path = Path("data/interim/balls.parquet")
+def build_balls(
+    raw_dir=Path("data/raw"),
+    output_path=Path("data/interim/balls.parquet"),
+):
 
     frames = []
     skipped = 0
@@ -50,6 +51,10 @@ def main():
     print(f"Skipped files: {skipped}")
     print(f"Saved to: {output_path}")
     print(f"{match_count} matches, {len(df)} rows")
+
+
+def main():
+    build_balls()
 
 
 if __name__ == "__main__":

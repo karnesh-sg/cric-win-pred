@@ -1,3 +1,6 @@
+import pandas as pd
+
+
 def test_import():
     import cricketwp
 
@@ -30,3 +33,40 @@ def test_totals_match_raw_json():
             assert got == expected, (
                 f"Total mismatch in {f.name}, innings {i}: expected {expected}, got {got}"
             )
+
+
+from cricketwp.data.build_balls import build_balls
+from cricketwp.pipeline import build_match_states
+
+
+def test_two_fixture_pipeline(tmp_path):
+    fixture_dir = Path("tests/fixtures")
+
+    balls_path = tmp_path / "interim" / "balls.parquet"
+    states_dir = tmp_path / "states"
+
+    # Stage 1: Parse both fixtures into a balls dataset.
+    build_balls(
+        raw_dir=fixture_dir,
+        output_path=balls_path,
+    )
+
+    assert balls_path.exists()
+
+    balls = pd.read_parquet(balls_path)
+    assert not balls.empty
+    assert balls["match_id"].nunique() == 2
+
+    # Stage 2: Build match and innings states.
+    summary = build_match_states(
+        balls_path=balls_path,
+        output_dir=states_dir,
+    )
+
+    assert summary["matches"] == 2
+    assert summary["first_rows"] > 0
+    assert summary["chase_rows"] > 0
+
+    assert (states_dir / "matches.parquet").exists()
+    assert (states_dir / "first_states.parquet").exists()
+    assert (states_dir / "chase_states.parquet").exists()
