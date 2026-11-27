@@ -26,7 +26,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-api.txt
           pip install -e .
-          pip install pytest pytest-cov ruff httpx pip-audit
+          pip install pytest pytest-cov ruff httpx pip-audit pyarrow
 
       - name: Ruff lint
         run: ruff check src tests scripts
