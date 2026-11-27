@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
-from cricketwp.api.main import app
 
+from cricketwp.api.main import app
 
 BASE = {
     "batting_team": "Chennai Super Kings",

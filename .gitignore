@@ -8,3 +8,7 @@ mlruns/
 !.env.example
 .pytest_cache/
 .ruff_cache/
+# Coverage reports
+.coverage
+.coverage.*
+htmlcov/

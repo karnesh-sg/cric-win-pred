@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.metrics import (
-    log_loss,
     brier_score_loss,
+    log_loss,
     roc_auc_score,
 )
 

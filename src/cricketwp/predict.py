@@ -1,6 +1,7 @@
 import numpy as np
-from cricketwp.features import CHASE_FEATURES
 import xgboost as xgb
+
+from cricketwp.features import CHASE_FEATURES
 
 
 def apply_rules(p, runs_needed, balls_left, wickets_in_hand):
@@ -31,12 +32,6 @@ def chase_curve(df, clf, iso_x, iso_y):
     out["wpa"] = out.p_chase.diff().fillna(0)
 
     return out
-
-
-import numpy as np
-import xgboost as xgb
-
-from cricketwp.features import CHASE_FEATURES
 
 
 LABELS = {

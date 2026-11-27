@@ -2,19 +2,20 @@ import json
 import logging
 import time
 import uuid
-from pathlib import Path
 from collections import defaultdict, deque
+from pathlib import Path
 from threading import Lock
-from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+
 import numpy as np
 import pandas as pd
-from fastapi import FastAPI, HTTPException, APIRouter, Request
-from pydantic import BaseModel, Field
+from fastapi import APIRouter, FastAPI, HTTPException, Request
 from fastapi.encoders import jsonable_encoder
-from cricketwp.predictor import Predictor
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel, Field
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from cricketwp.predictor import Predictor
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("cricketwp.api")

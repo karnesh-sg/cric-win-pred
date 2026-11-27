@@ -26,10 +26,20 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-api.txt
           pip install -e .
-          pip install pytest ruff httpx
+          pip install pytest pytest-cov ruff httpx pip-audit
 
-      - name: Lint API files
-        run: ruff check --select E4,E7,E9,F src/cricketwp/api/main.py src/cricketwp/predictor.py
+      - name: Ruff lint
+        run: ruff check src tests scripts
 
-      - name: Run tests
-        run: pytest -q
+      - name: Ruff format check
+        run: ruff format --check src tests scripts
+
+      - name: Dependency security audit
+        run: pip-audit -r requirements-api.txt
+
+      - name: Run tests with coverage
+        run: |
+          pytest -q --cov=cricketwp --cov-report=term --cov-fail-under=50
+
+      - name: Build Docker image
+        run: docker build -t cwp-api:ci .

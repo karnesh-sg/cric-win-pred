@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import pandas as pd
@@ -22,7 +23,7 @@ def build_balls(
     for f in files:
         try:
             frames.append(parse_match(f))
-        except Exception as e:
+        except (json.JSONDecodeError, UnicodeDecodeError, OSError) as e:
             skipped += 1
             print("skip", f.name, e)
 

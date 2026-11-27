@@ -1,5 +1,5 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 
 def add_state_features(s: pd.DataFrame, chase: bool) -> pd.DataFrame:

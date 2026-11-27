@@ -4,11 +4,9 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import xgboost as xgb
-
 from sklearn.metrics import log_loss
 
 from cricketwp.predict import chase_curve
-
 
 # ============================================================
 # 1. CONFIGURATION
@@ -261,7 +259,7 @@ results = {
     "bootstrap_repetitions": N_BOOTSTRAPS,
     "random_seed": RANDOM_SEED,
     "test_matches": int(n_matches),
-    "test_states": int(len(test)),
+    "test_states": len(test),
     "baseline_probability": baseline_probability,
     "baseline_logloss": float(baseline_ll),
     "model_logloss": float(model_ll),

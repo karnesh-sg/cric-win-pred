@@ -1,4 +1,5 @@
 import numpy as np
+
 from cricketwp.predict import apply_rules
 
 
@@ -30,8 +31,9 @@ def test_all_out_before_chase_completed():
 
 
 import pandas as pd
-from cricketwp.predict import chase_curve
+
 from cricketwp.features import CHASE_FEATURES
+from cricketwp.predict import chase_curve
 
 
 class DummyClassifier:

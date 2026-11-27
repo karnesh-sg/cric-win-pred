@@ -12,7 +12,6 @@ from cricketwp.features import (
     add_venue_priors,
 )
 
-
 ROOT = Path(__file__).resolve().parents[1]
 
 DATA_DIR = ROOT / "data" / "interim"

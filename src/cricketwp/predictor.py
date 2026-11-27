@@ -381,9 +381,9 @@ class Predictor:
         q10_pred, q50_pred, q90_pred = sorted([q10_pred, q50_pred, q90_pred])
 
         projected_score = {
-            "q10": int(round(q10_pred)),
-            "q50": int(round(q50_pred)),
-            "q90": int(round(q90_pred)),
+            "q10": int(round(q10_pred)),  # noqa: RUF046
+            "q50": int(round(q50_pred)),  # noqa: RUF046
+            "q90": int(round(q90_pred)),  # noqa: RUF046
         }
 
         # 11. Explain win-probability classifier using TreeSHAP

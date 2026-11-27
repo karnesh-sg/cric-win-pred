@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from cricketwp.eval import evaluate, ece
+from cricketwp.eval import ece, evaluate
 
 
 def test_perfect_predictions_have_near_zero_logloss():

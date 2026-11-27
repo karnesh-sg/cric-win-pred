@@ -3,7 +3,6 @@ from pathlib import Path
 
 import pandas as pd
 import xgboost as xgb
-
 from sklearn.isotonic import IsotonicRegression
 
 from cricketwp.features import (
@@ -11,7 +10,6 @@ from cricketwp.features import (
     FIRST_FEATURES,
     MONO,
 )
-
 
 FIRST_MONO = {"runs": 1, "wickets_in_hand": 1}
 CHASE_MONO = MONO

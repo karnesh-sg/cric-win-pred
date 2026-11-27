@@ -760,3 +760,238 @@ Artifacts:
 - `reports/rolling_backtest.csv`
 - `reports/rolling_backtest.png`
 - `scripts/rolling_backtest.py`
+
+# Production Readiness Results
+
+## H2 — Observability and Drift Monitoring
+
+**Status: Complete**
+
+### Implemented
+
+- Structured JSON request logging.
+- Request IDs and `x-request-id` response headers.
+- `/ready` readiness endpoint.
+- `/stats` API statistics endpoint.
+- Prediction request tracking and latency statistics.
+- Feature drift reporting using Population Stability Index (PSI).
+
+### Production model evaluation
+
+Production Predictor evaluation on the 2026 test period:
+
+| Metric | Result |
+|---|---:|
+| Log loss | 0.308828 |
+| Brier score | 0.098535 |
+| AUC | 0.942970 |
+| ECE | 0.032474 |
+
+### Drift findings
+
+| Feature | PSI | Assessment |
+|---|---:|---|
+| venue_avg_first | 0.540611 | Investigate |
+| target | 0.196482 | Watch |
+| target_vs_venue | 0.173575 | Watch |
+| venue_chase_rate | 0.157517 | Watch |
+| elo_diff | 0.139779 | Watch |
+| crr | 0.108147 | Watch |
+
+The venue average first-innings feature showed the strongest drift and requires investigation. Other listed features were classified for monitoring rather than automatic retraining.
+
+### Result
+
+The API now exposes operational information, and the project has a repeatable way to inspect changes in incoming feature distributions.
+
+---
+
+## H3 — Reproducible Pipeline and Artifact Management
+
+**Status: Complete**
+
+### Implemented
+
+- Deterministic training and artifact-building pipeline.
+- Staging workflow for testing newly generated artifacts.
+- Artifact metadata and model version information.
+- Data and artifact fingerprinting.
+- Reproducibility checks.
+- Pipeline documentation and runbook.
+- Staging Predictor verification.
+
+### Artifact integrity
+
+Recorded fingerprint:
+
+`cdfa0eb09ccfd78c1dfa7c785804f5986d7c3e9625ff9f048de56d0377dfa6b6`
+
+### Quantile model assessment
+
+The first-innings score interval had:
+
+- Nominal coverage: 80%.
+- Empirical coverage: approximately 73.3%.
+
+The interval undercovers relative to its nominal target. This limitation was documented rather than incorrectly describing the interval as calibrated.
+
+### Production safety
+
+New artifacts were tested in staging. Production artifacts were not automatically replaced or promoted.
+
+### Result
+
+The project now has a controlled artifact-generation and validation process. Model changes can be evaluated before they are promoted into production.
+
+---
+
+## H4 — Production API Hardening
+
+**Status: Complete**
+
+### Implemented
+
+- Versioned API routes under `/api/v1`.
+- Legacy routes retained for backward compatibility.
+- In-memory per-IP rate limiting.
+- Standardized error responses.
+- Request ID middleware.
+- Input validation and error handling.
+- Tests for 404, 422, 429 and 500 responses.
+- Preservation of `Retry-After` headers.
+
+### API versioning
+
+All 12 endpoints are available under the versioned API prefix, while legacy routes continue to work.
+
+### Rate limiting
+
+Prediction endpoints are protected by a limit of 60 requests per minute per IP.
+
+Protected endpoints:
+- `/predict/chase`
+- `/what-if/chase`
+- `/predict/first-innings`
+
+The current limiter is in-memory. Multiple API workers or replicas will require shared rate-limit storage such as Redis.
+
+### Test results
+
+At H4 completion:
+
+- 30 tests passed.
+- 1 deprecation warning.
+
+### Result
+
+The API has a versioning strategy, predictable error handling, request identification and basic abuse protection without breaking existing dashboard routes.
+
+---
+
+## H5 — Container, CI and Load Testing
+
+**Status: Locally validated; GitHub Actions verification pending.**
+
+### Docker hardening
+
+Implemented:
+
+- Non-root `app` user.
+- Unbuffered Python logging.
+- Docker health check.
+- Correct application file ownership.
+- Python 3.11 slim base image.
+
+Validation:
+
+| Check | Result |
+|---|---|
+| Docker build | Passed |
+| Runtime user | `app` |
+| Container health | Healthy |
+| `/health` | Passed |
+| `/ready` | Passed |
+| `/stats` | Passed |
+| Chase prediction | Passed |
+
+Image size: 634,834,178 bytes (approximately 605.4 MiB).
+
+### CI workflow
+
+Configured checks:
+
+1. Python 3.11.
+2. Ruff lint.
+3. Ruff formatting.
+4. Dependency security audit using pip-audit.
+5. Pytest with coverage.
+6. Docker image build.
+
+Local validation:
+
+| Check | Result |
+|---|---|
+| Ruff lint | Passed |
+| Ruff format | Passed — 26 files |
+| pip-audit | No known vulnerabilities |
+| Pytest | 30 passed, 1 warning |
+| Coverage | 50.73% |
+| Required coverage | 50% |
+| Docker CI build | Passed |
+
+The local environment used Python 3.14.6. GitHub Actions must still verify the workflow under its configured Python 3.11 environment.
+
+### Locust load testing
+
+Hardware:
+
+- AMD Ryzen 3 3250U with Radeon Graphics.
+- 9.88 GB physical RAM.
+- Docker allocation: 4 CPUs and approximately 4.743 GiB RAM.
+
+#### 50-user stress test
+
+| Metric | Result |
+|---|---:|
+| Requests | 1,544 |
+| Failures | 1,106 |
+| Failure rate | 71.63% |
+| Throughput | 26.92 req/s |
+| Aggregate p50 | 16 ms |
+| Aggregate p95 | 2,200 ms |
+
+All failures were HTTP 429 responses from the rate limiter. Health checks had zero failures.
+
+This test measured rate-limit enforcement, not sustainable successful prediction capacity.
+
+#### 2-user controlled test
+
+| Metric | Result |
+|---|---:|
+| Requests | 30 |
+| Failures | 0 |
+| Failure rate | 0% |
+| Prediction p50 | 69 ms |
+| Prediction p95 | 330 ms |
+| Prediction average | 149 ms |
+| Prediction maximum | 1,326 ms |
+| Aggregate throughput | 0.53 req/s |
+
+All requests succeeded.
+
+### Performance documentation
+
+`docs/performance.md` records both tests, the hardware specifications, latency metrics and interpretation.
+
+### Remaining acceptance check
+
+- [x] Docker hardening
+- [x] Local container validation
+- [x] CI checks locally validated
+- [x] Locust tests completed
+- [x] Performance report recorded
+- [ ] GitHub Actions workflow executed successfully on Python 3.11
+
+### Overall H5 conclusion
+
+The implementation and local validation are complete. Final Gate H closure depends on a successful GitHub Actions run.

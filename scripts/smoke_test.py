@@ -3,7 +3,6 @@ import time
 
 import requests
 
-
 base = sys.argv[1].rstrip("/")
 
 

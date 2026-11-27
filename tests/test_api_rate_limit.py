@@ -2,15 +2,13 @@ import asyncio
 import json
 
 import pytest
-
 from fastapi import HTTPException
 from fastapi.testclient import TestClient
-from starlette.requests import Request
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.requests import Request
 
 from cricketwp.api import main as api
 from cricketwp.api.main import check_rate_limit, rate_limit_store
-
 
 client = TestClient(api.app)
 

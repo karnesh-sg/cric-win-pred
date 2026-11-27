@@ -798,3 +798,177 @@ Continue toward production-grade reliability by prioritising:
 - Calibration monitoring across competitions and match situations.
 - Further investigation of high-confidence prediction failures.
 - Maintaining regression tests as prediction logic evolves.
+
+# Production Readiness Devlog — H2 to H5
+
+## H2 — Observability and Drift Monitoring
+
+**Status: Completed and pushed**
+
+### What I built
+
+- Added structured JSON request logging.
+- Implemented request IDs and response headers.
+- Added `/ready` and `/stats`.
+- Added API prediction and latency statistics.
+- Built a feature drift reporting workflow using PSI.
+
+### What I learned
+
+Observability is not just printing errors. A production ML service needs to expose its operational health and detect when incoming data begins to differ from its training distribution.
+
+I also learned that drift does not automatically mean the model is failing. It is a signal that needs investigation.
+
+### Important finding
+
+`venue_avg_first` had a PSI of 0.540611, making it the highest-priority drift feature to investigate.
+
+The production model's 2026 test metrics were log loss 0.308828, Brier score 0.098535, AUC 0.942970 and ECE 0.032474.
+
+---
+
+## H3 — Reproducible Pipeline and Artifact Management
+
+**Status: Completed and pushed**
+
+### What I built
+
+- A deterministic training and artifact pipeline.
+- A staging process for new artifacts.
+- Artifact metadata and fingerprinting.
+- Reproducibility checks.
+- A runbook and staging Predictor verification.
+
+### Important engineering decision
+
+I kept production artifacts separate from staging artifacts. A successful training run should not automatically replace a working production model.
+
+### What I learned
+
+A trained model is not enough for a production ML system. The data, features, model files and metadata must be reproducible and traceable.
+
+I also learned to report uncertainty honestly. The score interval's empirical coverage was approximately 73.3%, below its nominal 80% target.
+
+### Git
+
+Commit: `9d587ae` — `feat: complete production pipeline H3`
+
+---
+
+## H4 — Production API Hardening
+
+**Status: Completed and pushed**
+
+### What I built
+
+- Versioned routes under `/api/v1`.
+- Backward-compatible legacy routes.
+- Per-IP rate limiting.
+- Request ID middleware.
+- Standardized error responses.
+- Tests for 404, 422, 429 and 500 cases.
+
+### Testing
+
+At H4 completion, the suite reported:
+
+`30 passed, 1 warning`
+
+### What I learned
+
+API compatibility matters. Adding a versioned route should not unexpectedly break existing consumers.
+
+Rate limiting also requires deployment awareness. An in-memory limiter is suitable for a single process, but multiple workers need shared storage.
+
+### Git
+
+Commit: `947e064` — `feat: complete production API hardening H4`
+
+---
+
+## H5 — Container, CI and Load Testing
+
+**Status: Local implementation and validation completed; GitHub CI verification pending.**
+
+### Docker
+
+- Hardened the Dockerfile.
+- Created a non-root `app` user.
+- Enabled unbuffered logging.
+- Added a health check.
+- Built and ran the image locally.
+- Verified `/health`, `/ready`, `/stats` and a chase prediction.
+
+The container ran as `app` and reached healthy status.
+
+Image size: approximately 605.4 MiB.
+
+### CI
+
+Added:
+
+- Ruff lint and format checks.
+- pip-audit.
+- Pytest with coverage.
+- Docker image build.
+- Python 3.11 configuration.
+
+Local results:
+
+- Ruff checks passed.
+- pip-audit found no known vulnerabilities.
+- 30 tests passed.
+- Coverage reached 50.73%, above the 50% threshold.
+- Docker build passed.
+
+The local environment was Python 3.14.6, so the actual GitHub Actions run remains necessary.
+
+### Load testing
+
+Installed Locust and created `scripts/locustfile.py`.
+
+The first 50-user test generated many HTTP 429 responses. Instead of treating these as application crashes, I inspected the failure types and identified the rate limiter as the cause.
+
+I then ran a controlled two-user test:
+
+- 30 total requests.
+- Zero failures.
+- Prediction p50: 69 ms.
+- Prediction p95: 330 ms.
+
+### What I learned
+
+1. A container needs more than a successful build: runtime permissions and health checks matter.
+2. A load test must distinguish application failures from intentional rate-limit responses.
+3. p50 and p95 tell different parts of the latency story.
+4. A local green CI run does not guarantee that GitHub's Python 3.11 environment will pass.
+5. Production changes should be tested in staging before replacing production artifacts.
+
+### Documentation
+
+Created `docs/performance.md` with the hardware, benchmark results and interpretation.
+
+### Remaining work
+
+- Run the GitHub Actions workflow.
+- Fix any CI-specific failures.
+- Complete the H5 acceptance review.
+
+---
+
+## Reflection across H2–H5
+
+The production-readiness work changed the project from a model-serving API into a more operationally mature ML service.
+
+The main skills developed were:
+
+- Observability and drift monitoring.
+- Reproducible ML pipelines.
+- Artifact versioning and staging.
+- API versioning and compatibility.
+- Rate limiting and error handling.
+- Docker hardening.
+- Automated quality and security checks.
+- Load testing and performance interpretation.
+
+The biggest lesson is that production readiness is not achieved by adding infrastructure alone. Each safeguard needs a test that proves it works.

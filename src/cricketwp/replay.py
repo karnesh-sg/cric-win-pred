@@ -1,17 +1,21 @@
-from cricketwp.predict import chase_curve
+import json
 from pathlib import Path
 
-import json
 import numpy as np
 import pandas as pd
 import xgboost as xgb
 
-from cricketwp.features import CHASE_FEATURES, FIRST_FEATURES
-
+from cricketwp.features import FIRST_FEATURES
+from cricketwp.predict import chase_curve
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data" / "interim"
 ARTIFACTS = ROOT / "artifacts"
+
+
+# --------------------------------------------------
+# 1. Load processed datasets
+# --------------------------------------------------
 
 first = pd.read_parquet(DATA / "first_final.parquet")
 chase = pd.read_parquet(DATA / "chase_final.parquet")
@@ -26,7 +30,10 @@ print("Chase columns:")
 print(chase.columns.tolist())
 
 
-# Keep matches from 2025 onward
+# --------------------------------------------------
+# 2. Select test-period matches
+# --------------------------------------------------
+
 first["date_x"] = pd.to_datetime(first["date_x"])
 chase["date_x"] = pd.to_datetime(chase["date_x"])
 
@@ -40,32 +47,65 @@ chase_te = chase[chase["match_id"].isin(test_ids)].copy()
 
 print("Test matches:", len(test_ids))
 print("First innings test rows:", first_te.shape)
-print("Chase innings test rows:", chase_te.shape)
+print("Chase test rows:", chase_te.shape)
 
-print("First test date range:", first_te["date_x"].min(), "to", first_te["date_x"].max())
-print("Chase test date range:", chase_te["date_x"].min(), "to", chase_te["date_x"].max())
+print(
+    "First test date range:",
+    first_te["date_x"].min(),
+    "to",
+    first_te["date_x"].max(),
+)
+
+print(
+    "Chase test date range:",
+    chase_te["date_x"].min(),
+    "to",
+    chase_te["date_x"].max(),
+)
 
 
-# Load batting-first classifier
+# --------------------------------------------------
+# 3. Load models
+# --------------------------------------------------
+
+# Batting-first classifier
 clf1 = xgb.XGBClassifier()
 clf1.load_model(str(ARTIFACTS / "first_xgb.json"))
 
-# Load isotonic calibration values
+# Chase classifier
+clf = xgb.XGBClassifier()
+clf.load_model(str(ARTIFACTS / "chase_xgb.json"))
+
+# First-innings isotonic calibration
 iso_f = json.loads((ARTIFACTS / "first_iso.json").read_text())
+
 ix = np.array(iso_f["x"])
 iy = np.array(iso_f["y"])
 
-# Load score quantile models
-q10_model = xgb.XGBRegressor()
-q10_model.load_model(str(ARTIFACTS / "score_q10.json"))
+# Chase isotonic calibration
+iso_c = json.loads((ARTIFACTS / "chase_iso.json").read_text())
 
-q50_model = xgb.XGBRegressor()
-q50_model.load_model(str(ARTIFACTS / "score_q50.json"))
+cx = np.array(iso_c["x"])
+cy = np.array(iso_c["y"])
 
-q90_model = xgb.XGBRegressor()
-q90_model.load_model(str(ARTIFACTS / "score_q90.json"))
+# Score quantile models
+score_models = []
 
-score_models = [q10_model, q50_model, q90_model]
+for name in [
+    "score_q10.json",
+    "score_q50.json",
+    "score_q90.json",
+]:
+    model = xgb.XGBRegressor()
+    model.load_model(str(ARTIFACTS / name))
+    score_models.append(model)
+
+print("Models and calibrators loaded successfully.")
+
+
+# --------------------------------------------------
+# 4. First-innings prediction curve
+# --------------------------------------------------
 
 
 def first_curve(df):
@@ -81,7 +121,7 @@ def first_curve(df):
     # Predict raw batting-first win probability
     raw = clf1.predict_proba(X)[:, 1]
 
-    # Calibrate probability
+    # Apply isotonic calibration
     p = np.interp(raw, ix, iy)
 
     return pd.DataFrame(
@@ -95,52 +135,9 @@ def first_curve(df):
     )
 
 
-# Load batting-first classifier
-clf1 = xgb.XGBClassifier()
-clf1.load_model(str(ARTIFACTS / "first_xgb.json"))
-
-# Load chase classifier
-clf = xgb.XGBClassifier()
-clf.load_model(str(ARTIFACTS / "chase_xgb.json"))
-
-# Load isotonic calibration data
-iso_f = json.loads((ARTIFACTS / "first_iso.json").read_text())
-iso_c = json.loads((ARTIFACTS / "chase_iso.json").read_text())
-
-ix, iy = iso_f["x"], iso_f["y"]
-cx, cy = iso_c["x"], iso_c["y"]
-
-# Load score quantile models
-score_models = []
-
-for name in ["score_q10.json", "score_q50.json", "score_q90.json"]:
-    model = xgb.XGBRegressor()
-    model.load_model(str(ARTIFACTS / name))
-    score_models.append(model)
-
-print("Models and calibrators loaded successfully.")
-
-
-def first_curve(df):
-    X = df[FIRST_FEATURES]
-
-    q = np.sort(
-        np.column_stack([model.predict(X) for model in score_models]),
-        axis=1,
-    )
-
-    raw = clf1.predict_proba(X)[:, 1]
-
-    return pd.DataFrame(
-        {
-            "p_bat_first_win": np.interp(raw, ix, iy),
-            "q10": q[:, 0],
-            "q50": q[:, 1],
-            "q90": q[:, 2],
-        },
-        index=df.index,
-    )
-
+# --------------------------------------------------
+# 5. Test first-innings prediction curve
+# --------------------------------------------------
 
 sample_id = first_te["match_id"].iloc[0]
 
@@ -153,37 +150,60 @@ print("Input shape:", sample.shape)
 print("Curve shape:", curve.shape)
 print(curve.head())
 
-# Build replay data for every test-period match
+
+# --------------------------------------------------
+# 6. Build replay data for all test matches
+# --------------------------------------------------
+
 parts = []
 
 for mid, f in first_te.groupby("match_id"):
-    # Batting-first innings probability curve
+    # Batting-first innings probability and score curves
     a = f.join(first_curve(f))
 
     # Chase innings for the same match
     c_ = chase_te[chase_te["match_id"] == mid]
 
     # Chase probability curve
-    cc = chase_curve(c_, clf, cx, cy)
+    cc = chase_curve(
+        c_,
+        clf,
+        cx,
+        cy,
+    )
 
-    # Convert chase probability to batting-first win probability
+    # Convert chase probability into batting-first probability
     b = c_.assign(p_bat_first_win=1 - cc["p_chase"].values)
 
     parts += [a, b]
 
-# Combine innings into a single DataFrame
+
+# --------------------------------------------------
+# 7. Combine innings
+# --------------------------------------------------
+
 rp = pd.concat(parts)
 
-# Create flags
+
+# --------------------------------------------------
+# 8. Create event flags
+# --------------------------------------------------
+
 rp["is_wicket"] = (rp["is_wicket"] > 0).astype(int)
 
 rp["is_six"] = (rp["runs_batter"] == 6).astype(int)
+
 rp["is_four"] = (rp["runs_batter"] == 4).astype(int)
+
 
 # Rename match date
 rp["date"] = rp["date_x"]
 
-# Select the required columns
+
+# --------------------------------------------------
+# 9. Select replay columns
+# --------------------------------------------------
+
 cols = [
     "match_id",
     "date",
@@ -203,11 +223,18 @@ cols = [
     "is_four",
 ]
 
-# Round probabilities and quantiles
 replay_out = rp[cols].copy()
 
+
+# Round numeric values
 numeric_cols = replay_out.select_dtypes(include="number").columns
+
 replay_out[numeric_cols] = replay_out[numeric_cols].round(4)
+
+
+# --------------------------------------------------
+# 10. Save replay artifact
+# --------------------------------------------------
 
 replay_out.to_csv(
     ARTIFACTS / "replay.csv.gz",
@@ -217,24 +244,39 @@ replay_out.to_csv(
 print("Replay shape:", rp[cols].shape)
 print("Replay matches:", rp["match_id"].nunique())
 print("Replay file created:", ARTIFACTS / "replay.csv.gz")
+
 print(
     "Replay file size (MB):",
-    round((ARTIFACTS / "replay.csv.gz").stat().st_size / (1024 * 1024), 2),
+    round(
+        (ARTIFACTS / "replay.csv.gz").stat().st_size / (1024 * 1024),
+        2,
+    ),
 )
 
 
-# Validate replay artifact
+# --------------------------------------------------
+# 11. Validate replay artifact
+# --------------------------------------------------
+
 replay = pd.read_csv(ARTIFACTS / "replay.csv.gz")
 
 print("\n--- Replay Validation ---")
 
-print("Probability min:", replay["p_bat_first_win"].min())
-print("Probability max:", replay["p_bat_first_win"].max())
+print(
+    "Probability min:",
+    replay["p_bat_first_win"].min(),
+)
+
+print(
+    "Probability max:",
+    replay["p_bat_first_win"].max(),
+)
 
 print(
     "Invalid probabilities:",
     ((replay["p_bat_first_win"] < 0) | (replay["p_bat_first_win"] > 1)).sum(),
 )
+
 
 # Quantile ordering for first innings only
 first_replay = replay[replay["innings"] == 1]
@@ -246,9 +288,15 @@ print(
     ).sum(),
 )
 
-print("Missing probabilities:", replay["p_bat_first_win"].isna().sum())
+print(
+    "Missing probabilities:",
+    replay["p_bat_first_win"].isna().sum(),
+)
 
-print("Unique matches:", replay["match_id"].nunique())
+print(
+    "Unique matches:",
+    replay["match_id"].nunique(),
+)
 
 print(
     "Flag values:",

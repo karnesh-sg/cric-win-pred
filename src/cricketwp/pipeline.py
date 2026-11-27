@@ -147,10 +147,7 @@ def build_features_and_splits(
 ) -> dict:
     """Build engineered features and chronological train/validation/test splits."""
 
-    import numpy as np
-
     from cricketwp.features import (
-        add_elo,
         add_rolling_features,
         add_state_features,
         add_venue_priors,
